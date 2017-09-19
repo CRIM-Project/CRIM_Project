@@ -10,11 +10,10 @@ counts_wanted = ['user', 'title', 'relationship_type', 'assertion_type']
 def get_counts(counts_wanted, data):
 	user_counts = {}
 	title_counts = {}
-	relationship_counts = {}
+	assertion_counts = {}
 
-	r_keys = [u'types']
-	
-	#r_keys = [u'scoreA_meiids', u'titleA', u'titleB', u'scoreA_ema', u'scoreB_ema', u'scoreA', u'scoreB', u'cid', u'boolDir', u'direction', u'comment', u'scoreB_meiids', u'scoreAassert', u'scoreBassert', u'id', u'types']  # ideally not use all of these?
+
+	r_keys = [u'title', u'score', u'cid', u'ema', u'mei_ids', u'comment', u'id', u'types']  # ideally not use all of these?
 	tempdict = dict(zip(r_keys,[None]*len(r_keys)))
 
 	for rel in data:
@@ -33,31 +32,26 @@ def get_counts(counts_wanted, data):
 
 		versions = info2['scores']
 #		print(versions)
-		""""
 		for x in versions:
 			title = x['title']
 			if title[:2] == ': ': title = title[2:] #cleaning some text
 			if title in title_counts.keys():
-				
-				
-				temp = title_counts[title]['counts']
-				title_counts[title]['counts'] = temp+1
-				
-				
+				temp = title_counts[title]
+				title_counts[title] = temp+1
 			else: #doesnt exist yet
-				title_counts[title]['counts']= 1
-			"""
-		relation = info2['relationships'][0]
+				title_counts[title]= 1
+			
+		assertion = info2['assertions'][0]
 		
 		try:
 			direction = relation['direction']
 		except KeyError:
 			direction = "None"
-		if direction in relationship_counts.keys():
-			temp = relationship_counts[direction]
-			relationship_counts[direction] = temp+1
+		if direction in assertion_counts.keys():
+			temp = assertion_counts[direction]
+			assertion_counts[direction] = temp+1
 		else: #doesnt exist yet
-			relationship_counts[direction] = 1
+			assertion_counts[direction] = 1
 
 
 	#	tempdict = dict(zip(r_keys,[None]*len(r_keys)))
@@ -65,22 +59,13 @@ def get_counts(counts_wanted, data):
 		for key in r_keys:
 			try:
 				relat = str(relation[key]) 
-				if key == "types":
-					#print (relation[key])
-					if list(relation[key]) == []:
-						relat = "None"
-					else:
-						relat = list(relation[key])[0]
-					
-					#print ("lis")
-					#print (list(relation[key]))
 			except KeyError:
                         	relat = "None"
 			if tempdict[key] == None:
 				tempdict[key] = {}	
 			if relat in tempdict[key].keys(): # hash issue with lists
 				temp1 = tempdict[key][relat]
-				tempdict[key][relat] = temp1+1					
+				tempdict[key][relat] = temp1+1
 			else: #doesnt exist yet
 				tempdict[key][relat] = 1
  
