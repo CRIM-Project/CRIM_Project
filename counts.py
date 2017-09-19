@@ -17,6 +17,8 @@ def get_counts(counts_wanted, data):
 	r_keys = [ u'titleA', u'titleB', u'scoreA_ema', u'scoreB_ema', u'direction', u'types']  # ideally not use all of these?
 	#r_keys = [u'scoreA_meiids', u'titleA', u'titleB', u'scoreA_ema', u'scoreB_ema', u'scoreA', u'scoreB', u'cid', u'boolDir', u'direction', u'comment', u'scoreB_meiids', u'scoreAassert', u'scoreBassert', u'id', u'types']  # ideally not use all of these?
 	
+	
+	#r_keys = [u'scoreA_meiids', u'titleA', u'titleB', u'scoreA_ema', u'scoreB_ema', u'scoreA', u'scoreB', u'cid', u'boolDir', u'direction', u'comment', u'scoreB_meiids', u'scoreAassert', u'scoreBassert', u'id', u'types']  # ideally not use all of these?
 	tempdict = dict(zip(r_keys,[None]*len(r_keys)))
 
 	for rel in data:
@@ -43,11 +45,17 @@ def get_counts(counts_wanted, data):
 			title = x['title']
 			if title[:2] == ': ': title = title[2:] #cleaning some text
 			if title in title_counts.keys():
+				
+				
 				temp = title_counts[title]
 				title_counts[title] = temp+1
+				
+				
 			else: #doesnt exist yet
 				title_counts[title]= 1
 				
+				title_counts[title]= 1
+		
 		try:
 			direction = relation['direction']
 		except KeyError:
@@ -85,7 +93,7 @@ def get_counts(counts_wanted, data):
 				tempdict[key][relat] = temp1+1					
 			else: #doesnt exist yet
 				tempdict[key][relat] = 1
-
+ 
 	pprint.pprint(tempdict)
 
 	return user_counts,title_counts,relationship_counts,tempdict
