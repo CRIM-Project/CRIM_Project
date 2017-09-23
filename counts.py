@@ -57,7 +57,7 @@ def get_counts(counts_wanted, data):
 			else: #doesnt exist yet
 				title_counts[title]= 1
 				
-		
+
 		try:
 			direction = relation['direction']
 		except KeyError:
@@ -68,10 +68,10 @@ def get_counts(counts_wanted, data):
 		else: #doesnt exist yet
 			relationship_counts[direction] = 1
 		
-
+		#print( 'here',info2['assertions'])
 		#tempdict = dict(zip(r_keys,[None]*len(r_keys)))
 		#makes data structure like {u'scoreA_meiids': None, u'titleA': None,...}
-		#testing = {}
+
 		for key in r_keys:
 			try:
 				relat = str(relation[key]) 
@@ -105,6 +105,7 @@ def get_counts(counts_wanted, data):
 				tempdict[key][relat] = temp1+1					
 			else: #doesnt exist yet
 				tempdict[key][relat] = 1
+<<<<<<< HEAD
 		
 		for key in a_keys:
 			try:
@@ -145,6 +146,7 @@ def get_counts(counts_wanted, data):
  
 	#pprint.pprint(tempdict)
 	pprint.pprint(a_tempdict)
+
 
 	return user_counts,title_counts,relationship_counts,tempdict,a_tempdict
 
