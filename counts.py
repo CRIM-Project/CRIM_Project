@@ -66,10 +66,12 @@ def get_counts(counts_wanted, data):
 		else: #doesnt exist yet
 			relationship_counts[direction] = 1
 		
+		
+		#print( 'here',info2['assertions'])
+		
 
 		#tempdict = dict(zip(r_keys,[None]*len(r_keys)))
 		#makes data structure like {u'scoreA_meiids': None, u'titleA': None,...}
-		testing = {}
 		for key in r_keys:
 			try:
 				relat = str(relation[key]) 
@@ -93,7 +95,37 @@ def get_counts(counts_wanted, data):
 				tempdict[key][relat] = temp1+1					
 			else: #doesnt exist yet
 				tempdict[key][relat] = 1
- 
+
+		#NOTE: CAN THERE BE ZERO ASSERTIONS FOR ONE ITEM? 
+		# Also we still need to make a_keys - similar to r_keys
+		"""
+		for key in a_keys: #asser is like relat 
+                        try:
+                                asser = str(assertions[key])
+                                if key == "types":
+                                        #print (relation[key])
+                                        if list(assertions[key]) == []:
+                                                asser = "None"
+                                        else:
+                                                asser = list(assertions[key])[0]
+						#currently just takes the first one which is wrong!
+                                        #print ("lis")
+                                        #print (list(relation[key]))
+                        except KeyError:
+                                asser = "None"
+                #       if type(relat) == type([]):
+                #               for elem in relat:
+                        if assert_dict[key] == None:
+                                assert_dict[key] = {}
+                        if relat in assert_dict[key].keys(): # hash issue with lists
+                                temp1 = assert_dict[key][asser]
+                                assert_dict[key][asser] = temp1+1                              
+                        else: #doesnt exist yet
+                                assert_dict[key][asser] = 1
+
+
+
+ 		"""
 	pprint.pprint(tempdict)
 
 	return user_counts,title_counts,relationship_counts,tempdict
