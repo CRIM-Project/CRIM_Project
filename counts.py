@@ -12,6 +12,7 @@ def get_counts(counts_wanted, data):
 	user_counts = {}
 	title_counts = {}
 	relationship_counts = {}
+	ema_dictionary = {}
 
 
 	r_keys = [ u'titleA', u'titleB', u'scoreA_ema', u'scoreB_ema', u'direction', u'types']  # ideally not use all of these?
@@ -48,14 +49,22 @@ def get_counts(counts_wanted, data):
 		
 		for x in versions:
 			title = x['title']
+			#print(x)
+			
 			if title[:2] == ': ': 
 				title = title[2:] #cleaning some text
 			
 			if title in title_counts.keys():
 				temp = title_counts[title]
-				title_counts[title] = temp+1	
+				title_counts[title] = temp+1
+				ema_dictionary[title] = ema_dictionary[title]+[relation['scoreA_ema'].split('/')[0]]
 			else: #doesnt exist yet
 				title_counts[title]= 1
+				ema_dictionary[title] = [relation['scoreA_ema'].split('/')[0]]
+				#print ("ema_1", relation['scoreA_ema'])
+				#print ("ema_2", relation['scoreA_ema'].split('/')[0])
+				#print ("ema_3", relation['scoreA_ema'].split('/'), "\n")
+		
 				
 
 		try:
@@ -105,7 +114,7 @@ def get_counts(counts_wanted, data):
 				tempdict[key][relat] = temp1+1					
 			else: #doesnt exist yet
 				tempdict[key][relat] = 1
-<<<<<<< HEAD
+
 		
 		for key in a_keys:
 			try:
@@ -145,10 +154,10 @@ def get_counts(counts_wanted, data):
 			
  
 	#pprint.pprint(tempdict)
-	pprint.pprint(a_tempdict)
+	#pprint.pprint(a_tempdict)
+	pprint.pprint(ema_dictionary)
 
-
-	return user_counts,title_counts,relationship_counts,tempdict,a_tempdict
+	return user_counts,title_counts,relationship_counts,tempdict,a_tempdict, ema_dictionary
 
 def basic_dict_csv(d,header,filename):
 	with open(filename, 'w') as f:
@@ -162,7 +171,7 @@ def main():
 	crim = data_set_importer.get_json()
 	crim.set_url(crim.CRIM_url)
 	data = crim.get_data()
-	count_list,title_counts,relationship_counts,tempdict, a_tempdict = get_counts(counts_wanted, data)
+	count_list,title_counts,relationship_counts,tempdict, a_tempdict, ema_dictionary = get_counts(counts_wanted, data)
 	#print ('User: Count')	
 	#pprint.pprint(count_list)
 	#print ("\n")
@@ -172,6 +181,7 @@ def main():
 	#print ('Relationship(direction): Count')	
 	#pprint.pprint(relationship_counts,indent=2)
 	
+	basic_dict_csv(ema_dictionary, 'ema', 'ema.csv')
 	basic_dict_csv(tempdict['types'],'realationship_types', 'relationship_types.csv')
 	basic_dict_csv(count_list,'users','user_counts.csv')
 	basic_dict_csv(title_counts,'titles','title_counts.csv')
