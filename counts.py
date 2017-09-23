@@ -45,17 +45,10 @@ def get_counts(counts_wanted, data):
 			title = x['title']
 			if title[:2] == ': ': title = title[2:] #cleaning some text
 			if title in title_counts.keys():
-				
-				
 				temp = title_counts[title]
 				title_counts[title] = temp+1
-				
-				
 			else: #doesnt exist yet
 				title_counts[title]= 1
-				
-				title_counts[title]= 1
-		
 		try:
 			direction = relation['direction']
 		except KeyError:
@@ -66,10 +59,7 @@ def get_counts(counts_wanted, data):
 		else: #doesnt exist yet
 			relationship_counts[direction] = 1
 		
-		
 		#print( 'here',info2['assertions'])
-		
-
 		#tempdict = dict(zip(r_keys,[None]*len(r_keys)))
 		#makes data structure like {u'scoreA_meiids': None, u'titleA': None,...}
 		for key in r_keys:
@@ -80,17 +70,27 @@ def get_counts(counts_wanted, data):
 					if list(relation[key]) == []:
 						relat = "None"
 					else:
-						relat = list(relation[key])[0]
-					
+						relat = list(relation[key])
+								
 					#print ("lis")
 					#print (list(relation[key]))
 			except KeyError:
                         	relat = "None"
-		#	if type(relat) == type([]):
-		#		for elem in relat:
-			if tempdict[key] == None:
+			if type(relat) == type([]):
+			#	print ("relat list", relat)
+				for elem in relat:
+			#		print ("elem", elem)
+					if tempdict[key] == None:
+						tempdict[key] = {}
+					if elem in list(tempdict[key]): # hash issue with lists
+						temp1 = tempdict[key][elem]
+						tempdict[key][elem] = temp1+1
+					else: #doesnt exist yet
+						tempdict[key][elem] = 1
+			
+			elif tempdict[key] == None:
 				tempdict[key] = {}	
-			if relat in tempdict[key].keys(): # hash issue with lists
+			elif relat in list(tempdict[key]): # hash issue with lists
 				temp1 = tempdict[key][relat]
 				tempdict[key][relat] = temp1+1					
 			else: #doesnt exist yet
