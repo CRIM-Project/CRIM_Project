@@ -57,10 +57,13 @@ def get_counts(counts_wanted, data):
 			if title in title_counts.keys():
 				temp = title_counts[title]
 				title_counts[title] = temp+1
-				ema_dictionary[title] = ema_dictionary[title]+[relation['scoreA_ema'].split('/')[0]]
+				ema_sub_dict = {'measures': relation['scoreA_ema'].split('/')[0] , 'Song_From': relation['titleB'] }#, 'Direction': relation['direction'] }
+				pprint.pprint(ema_sub_dict)
+				ema_dictionary[title] = ema_dictionary[title]+ [ema_sub_dict]
 			else: #doesnt exist yet
 				title_counts[title]= 1
-				ema_dictionary[title] = [relation['scoreA_ema'].split('/')[0]]
+				ema_sub_dict = {'measures': relation['scoreA_ema'].split('/')[0] , 'Song_From': relation['titleA'], }#'Direction': relation['direction'] }
+				ema_dictionary[title] = [ema_sub_dict]
 				#print ("ema_1", relation['scoreA_ema'])
 				#print ("ema_2", relation['scoreA_ema'].split('/')[0])
 				#print ("ema_3", relation['scoreA_ema'].split('/'), "\n")
@@ -128,7 +131,7 @@ def get_counts(counts_wanted, data):
 					if list(assertion[key]) == []:
 						assertt = "None"
 					else:
-						assertt = list(assertion[key])[0]
+						assertt = list(assertion[key]) # hopefully this works
 					
 			except KeyError:
                         	assertt = "None"
