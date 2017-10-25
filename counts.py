@@ -128,7 +128,7 @@ def get_counts(counts_wanted, data):
 					if list(assertion[key]) == []:
 						assertt = "None"
 					else:
-						assertt = list(assertion[key])[0]
+						assertt = list(assertion[key])
 					
 			except KeyError:
                         	assertt = "None"
