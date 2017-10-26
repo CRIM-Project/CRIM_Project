@@ -158,7 +158,7 @@ def get_counts(counts_wanted, data):
  
 	#pprint.pprint(tempdict)
 	#pprint.pprint(a_tempdict)
-	pprint.pprint(ema_dictionary)
+	#pprint.pprint(ema_dictionary)
 
 	return user_counts,title_counts,relationship_counts,tempdict,a_tempdict, ema_dictionary
 
@@ -166,6 +166,11 @@ def basic_dict_csv(d,header,filename):
 	with open(filename, 'w') as f:
 		f.write(header+ ',counts\n')
 		[f.write('{0},{1}\n'.format(key.replace(',', ''), value)) for key, value in d.items()]
+
+def to_json(d, filename):
+	with open(filename, 'w') as f:
+		json_str = json.dump(d, f, indent=4)
+		
 
 def write_to_csv(count_vals):
 	pass
@@ -184,13 +189,14 @@ def main():
 	#print ('Relationship(direction): Count')	
 	#pprint.pprint(relationship_counts,indent=2)
 	
-	basic_dict_csv(ema_dictionary, 'ema', 'ema.csv')
-	basic_dict_csv(tempdict['types'],'realationship_types', 'relationship_types.csv')
-	basic_dict_csv(count_list,'users','user_counts.csv')
-	basic_dict_csv(title_counts,'titles','title_counts.csv')
-	basic_dict_csv(a_tempdict['types'], 'assertion_types', 'assertion_types.csv')
-	basic_dict_csv(a_tempdict['title'], 'assertion_titles', 'assertion_titles.csv')
-	basic_dict_csv(a_tempdict['score'], 'assertion_scores', 'assertion_scores.csv')
+	to_json(ema_dictionary, 'ema.json')
+	#basic_dict_csv(ema_dictionary, 'ema', 'ema.csv')
+	#basic_dict_csv(tempdict['types'],'realationship_types', 'relationship_types.csv')
+	#basic_dict_csv(count_list,'users','user_counts.csv')
+	#basic_dict_csv(title_counts,'titles','title_counts.csv')
+	#basic_dict_csv(a_tempdict['types'], 'assertion_types', 'assertion_types.csv')
+	#basic_dict_csv(a_tempdict['title'], 'assertion_titles', 'assertion_titles.csv')
+	#basic_dict_csv(a_tempdict['score'], 'assertion_scores', 'assertion_scores.csv')
 
 	
 
