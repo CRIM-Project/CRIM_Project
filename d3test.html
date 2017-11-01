@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no">
+	<title>d3 axis magnifier: date/time scale</title>
+	<script src="https://unpkg.com/d3/build/d3.min.js"></script>
+	<style media="screen">
+		#main{
+			max-width: 600px;
+			margin: 0 auto;
+		}
+
+		text{
+			font-size: 12px;
+			fill: #43423e;
+			font-family: sans-serif;
+			pointer-events: none;
+		}
+
+		.hoverDetector{
+			fill: transparent;
+			cursor: pointer;
+		}
+
+		path.domain{
+			fill: none;
+			stroke: #000;
+			shape-rendering: crispEdges;
+		}
+
+		.tick line{
+			shape-rendering: crispEdges;
+		}
+
+		.point{
+			fill-opacity:0.5;
+			pointer-events: none;
+		}
+
+		.label{
+			opacity: 0;
+			pointer-events: none;
+		}
+
+		.label.show{
+			opacity: 1;
+		}
+
+		.focusRect{
+			fill: none;
+			stroke: #cec6b9;
+		}
+	</style>
+</head>
+<body>
+	<div id=main></div>
+
+	<script type="text/javascript">
+		function nth(d) {
+		  if(d>3 && d<21) return 'th';
+		  switch (d % 10) {
+		        case 1:  return "st";
+		        case 2:  return "nd";
+		        case 3:  return "rd";
+		        default: return "th";
+		    }
+		}
+
+		var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+		function dateMaths(origin, days){
+			var output = new Date(origin.valueOf());
+			return new Date(output.setDate(output.getDate() + days))
+		}
+
+		var data = d3.range(0,101,1);
+
+		data.forEach(function(d,i){
+			data[i] = dateMaths(new Date, -Math.floor(Math.random()*2465));
+		});
+
+		var main = d3.select("#main");
+
+		var bounds = main.node().getBoundingClientRect(),
+			width = bounds.width,
+			height = width*0.67,
+			margin = {left:65, top:20, right:0, bottom:20},
+			startDate = new Date(2010, 0, 1),
+			endDate = new Date(),
+			parseDate = d3.timeFormat("%Y-%m-%d").parse;
+
+		var graphic = main.append("svg")
+			.attr("id","graphic")
+			.attr("width",width + "px")
+			.attr("height",height + "px")
+			.style("width",width + "px")
+			.style("height",height + "px");
+
+		var yScale = d3.scaleTime()
+			.range([height-margin.bottom, margin.top])
+			.domain([startDate, endDate]);
+
+		var yScaleOriginal = yScale.copy();
+
+		var yAx = d3.axisLeft(yScale)
+			.ticks(60)
+			.tickFormat(function(d){
+				return d.getMonth() == 0 ? d.getFullYear():'';
+			});
+
+		function zoomScale(focus){
+			if(focus == "clear"){
+				yScale = yScaleOriginal.copy();
+
+				yAx = d3.axisLeft(yScale)
+					.ticks(60)
+					.tickFormat(function(d){
+						return d.getMonth() == 0 ? d.getFullYear():'';
+					});
+
+				yAxis
+					.transition()
+					.duration(100)
+					.call(yAx);
+
+				points
+					.transition()
+					.duration(100)
+					.attr("cy", function(d){return yScale(d)});
+
+				labels
+					.classed("show", false)
+					.transition()
+					.duration(100)
+					.attr("y", function(d){return yScale(d)+5});
+
+				focusRect
+					.transition()
+					.duration(100)
+					.attr("height", 0);
+			}else{
+				var topAnchor = d3.max([margin.top, focus-50]),
+					bottomAnchor = d3.min([height-margin.bottom, focus+50]),
+					topPoint = d3.min([endDate, dateMaths(yScaleOriginal.invert(focus),15)]),
+					bottomPoint = d3.max([startDate, dateMaths(topPoint, -30)]);
+
+				// var newTicks = d3.range(0, (bottomPoint-5), 10).concat(d3.range(bottomPoint, (topPoint+0.5), 0.5)).concat(d3.range((Math.ceil(topPoint/10)*10), 101, 10));
+
+				yScale
+					.range([height-margin.bottom, bottomAnchor, topAnchor, margin.top])
+					.domain([startDate, bottomPoint, topPoint, endDate]);
+
+				yAx
+					.ticks(60)
+					.tickFormat(function(d){
+						if(d >= bottomPoint && d <= topPoint){
+							return d.getMonth() >= 0 ? months[d.getMonth()] + " " + d.getFullYear():months[d.getMonth()];
+						}else{
+							return d.getMonth() == 0 ? d.getFullYear():'';
+						}
+					});
+
+				yAxis
+					.transition()
+					.duration(100)
+					.call(yAx);
+
+				points
+					.transition()
+					.duration(100)
+					.attr("cy", function(d){return yScale(d)});
+
+				labels
+					.classed("show", function(d){return d >= bottomPoint && d <= topPoint})
+					.transition()
+					.duration(100)
+					.attr("y", function(d){return yScale(d)+5});
+
+				focusRect
+					.attr("y", topAnchor)
+					.attr("height", (bottomAnchor-topAnchor));
+			}
+		}
+
+		var yAxis = graphic.append("g")
+			.attr("class", "y axis")
+			.attr("transform", "translate(" + margin.left + "," + 0 + ")")
+			.call(yAx);
+
+		var yAxisHoverDetector = graphic.append("rect")
+			.attr("class", "hoverDetector")
+			.attr("x", 0)
+			.attr("width", margin.left+30)
+			.attr("y", margin.top-5)
+			.attr("height", (height-margin.bottom)-margin.top+10)
+			.on("mousemove", function(){
+				zoomScale(d3.mouse(yAxis.node())[1]);
+			})
+			.on("mouseleave", function(){
+				zoomScale("clear");
+			});
+
+		var focusRect = graphic.append("rect")
+			.attr("class", "focusRect")
+			.attr("x", 0)
+			.attr("width", margin.left+50)
+			.attr("y", 0)
+			.attr("height", 0);
+
+		var points = graphic.selectAll("circle.point")
+			.data(data)
+			.enter()
+			.append("circle")
+			.attr("class", "point")
+			.attr("cx", 80)
+			.attr("cy", function(d){return yScale(d)})
+			.attr("r", 7)
+			.style("fill", function(d){return d3.hsl(Math.random()*50, Math.random()+0.5, 0.5)});
+
+		var labels = graphic.selectAll("text.label")
+			.data(data)
+			.enter()
+			.append("text")
+			.attr("class", "label")
+			.attr("x", 90)
+			.attr("y", function(d){return yScale(d)+5})
+			.html(function(d){return d.getDate() + nth(d.getDate()) + " of " + months[d.getMonth()]});
+
+	</script>
+</body>
+</html>
