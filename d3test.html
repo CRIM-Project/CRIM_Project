@@ -97,8 +97,9 @@
 			.style("width",width + "px")
 			.style("height",height + "px");
 
-		var yScale = d3.scaleTime()
-			.range([height-margin.bottom, margin.top])
+		var yScale = d3.scaleTime() //d3.scaleLinear()
+			//.range([height-margin.bottom, margin.top])
+		    .range([0, width])
 			.domain([startDate, endDate]);
 
 		var yScaleOriginal = yScale.copy();
@@ -110,6 +111,7 @@
 			});
 
 		function zoomScale(focus){
+			//console.log(focus);
 			if(focus == "clear"){
 				yScale = yScaleOriginal.copy();
 
@@ -148,7 +150,7 @@
 				// var newTicks = d3.range(0, (bottomPoint-5), 10).concat(d3.range(bottomPoint, (topPoint+0.5), 0.5)).concat(d3.range((Math.ceil(topPoint/10)*10), 101, 10));
 
 				yScale
-					.range([height-margin.bottom, bottomAnchor, topAnchor, margin.top])
+					.range([margin.top, topAnchor, bottomAnchor, height-margin.bottom])
 					.domain([startDate, bottomPoint, topPoint, endDate]);
 
 				yAx
@@ -185,17 +187,22 @@
 
 		var yAxis = graphic.append("g")
 			.attr("class", "y axis")
-			.attr("transform", "translate(" + margin.left + "," + 0 + ")")
+			.attr("transform", "translate(" + 0 + ", " + 5*margin.bottom + ")")
 			.call(yAx);
 
 		var yAxisHoverDetector = graphic.append("rect")
 			.attr("class", "hoverDetector")
 			.attr("x", 0)
-			.attr("width", margin.left+30)
+			//.attr("width", margin.left+30)
+			//.attr("width", (height-margin.bottom)-margin.top+10) //maddie's change that works
+			.attr("width", width-margin.right)
 			.attr("y", margin.top-5)
+			//.attr("height", (height-margin.bottom)-margin.top+10)
 			.attr("height", (height-margin.bottom)-margin.top+10)
+			/*.on("click", function() {
+  console.log( d3.mouse(yAxis.node()) );})*/
 			.on("mousemove", function(){
-				zoomScale(d3.mouse(yAxis.node())[1]);
+				zoomScale(d3.mouse(yAxis.node())[0]);
 			})
 			.on("mouseleave", function(){
 				zoomScale("clear");
