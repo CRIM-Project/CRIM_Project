@@ -103,7 +103,7 @@
 
 		var yScaleOriginal = yScale.copy();
 
-		var yAx = d3.axisLeft(yScale)
+		var yAx = d3.axisBottom(yScale)
 			.ticks(60)
 			.tickFormat(function(d){
 				return d.getMonth() == 0 ? d.getFullYear():'';
@@ -113,7 +113,7 @@
 			if(focus == "clear"){
 				yScale = yScaleOriginal.copy();
 
-				yAx = d3.axisLeft(yScale)
+				yAx = d3.axisBottom(yScale)
 					.ticks(60)
 					.tickFormat(function(d){
 						return d.getMonth() == 0 ? d.getFullYear():'';
@@ -127,13 +127,13 @@
 				points
 					.transition()
 					.duration(100)
-					.attr("cy", function(d){return yScale(d)});
+					.attr("cx", function(d){return yScale(d)}); //edited from cy
 
 				labels
 					.classed("show", false)
 					.transition()
 					.duration(100)
-					.attr("y", function(d){return yScale(d)+5});
+					.attr("x", function(d){return yScale(d)+5}); //was y
 
 				focusRect
 					.transition()
@@ -169,16 +169,16 @@
 				points
 					.transition()
 					.duration(100)
-					.attr("cy", function(d){return yScale(d)});
+					.attr("cx", function(d){return yScale(d)}); //edited from cy
 
 				labels
 					.classed("show", function(d){return d >= bottomPoint && d <= topPoint})
 					.transition()
 					.duration(100)
-					.attr("y", function(d){return yScale(d)+5});
+					.attr("x", function(d){return yScale(d)+5}); //was y
 
 				focusRect
-					.attr("y", topAnchor)
+					.attr("x", topAnchor) //was y
 					.attr("height", (bottomAnchor-topAnchor));
 			}
 		}
@@ -213,8 +213,8 @@
 			.enter()
 			.append("circle")
 			.attr("class", "point")
-			.attr("cx", 80)
-			.attr("cy", function(d){return yScale(d)})
+			.attr("cx",function(d){return yScale(d)}) //switched
+			.attr("cy", 80)
 			.attr("r", 7)
 			.style("fill", function(d){return d3.hsl(Math.random()*50, Math.random()+0.5, 0.5)});
 
@@ -223,8 +223,8 @@
 			.enter()
 			.append("text")
 			.attr("class", "label")
-			.attr("x", 90)
-			.attr("y", function(d){return yScale(d)+5})
+			.attr("x",function(d){return yScale(d)+5} ) //switched
+			.attr("y",90 )
 			.html(function(d){return d.getDate() + nth(d.getDate()) + " of " + months[d.getMonth()]});
 
 	</script>
