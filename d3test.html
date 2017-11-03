@@ -92,16 +92,16 @@
 
 		var graphic = main.append("svg")
 			.attr("id","graphic")
-			.attr("width",width + "px")
+			.attr("width",width + "px") // whats the difference here?
 			.attr("height",height + "px")
 			.style("width",width + "px")
 			.style("height",height + "px");
 
 		var yScale = d3.scaleTime() //d3.scaleLinear()
 			//.range([height-margin.bottom, margin.top])
-		    .range([0, width])
+		    .range([15, width-15])
 			.domain([startDate, endDate]);
-
+			console.log('test');
 		var yScaleOriginal = yScale.copy();
 
 		var yAx = d3.axisBottom(yScale)
@@ -135,7 +135,12 @@
 					.classed("show", false)
 					.transition()
 					.duration(100)
-					.attr("x", function(d){return yScale(d)+5}); //was y
+					.attr("y", function(d){return yScale(d)+5}); //was y
+
+				textbox
+					.classed("show", false)
+					.transition()
+					.duration(100);
 
 				focusRect
 					.transition()
@@ -147,11 +152,12 @@
 					topPoint = d3.min([endDate, dateMaths(yScaleOriginal.invert(focus),15)]),
 					bottomPoint = d3.max([startDate, dateMaths(topPoint, -30)]);
 
+
 				// var newTicks = d3.range(0, (bottomPoint-5), 10).concat(d3.range(bottomPoint, (topPoint+0.5), 0.5)).concat(d3.range((Math.ceil(topPoint/10)*10), 101, 10));
 
 				yScale
-					.range([margin.top, topAnchor, bottomAnchor, height-margin.bottom])
-					.domain([startDate, bottomPoint, topPoint, endDate]);
+							.range([margin.top, topAnchor, bottomAnchor, height-margin.bottom])
+							.domain([startDate, bottomPoint, topPoint, endDate]);
 
 				yAx
 					.ticks(60)
@@ -177,7 +183,12 @@
 					.classed("show", function(d){return d >= bottomPoint && d <= topPoint})
 					.transition()
 					.duration(100)
-					.attr("x", function(d){return yScale(d)+5}); //was y
+					.attr("y", function(d){return yScale(d)+5}); //was y
+
+				textbox
+					.classed("show", function(d){return d >= bottomPoint && d <= topPoint})
+					.transition()
+					.duration(100);
 
 				focusRect
 					.attr("x", topAnchor) //was y
@@ -228,11 +239,25 @@
 		var labels = graphic.selectAll("text.label")
 			.data(data)
 			.enter()
-			.append("text")
+			.append("text") // append object type
 			.attr("class", "label")
-			.attr("x",function(d){return yScale(d)+5} ) //switched
-			.attr("y",90 )
+			.attr("x", 200) //switched
+			.attr("y",function(d){return yScale(d)+5})
+			.attr("transform", "rotate(-90,200,200)")
+			// .attr('transform', 'rotate(45 -10 10)')
 			.html(function(d){return d.getDate() + nth(d.getDate()) + " of " + months[d.getMonth()]});
+
+		var textbox = graphic.selectAll('text.boxinfo')
+			.data(data)
+			.enter()
+			.append("text")
+			.attr("class","label")
+			.attr("x",50)
+			.attr("y",250)
+			.html( function(d){return "You're looking at this point: " + d.getDate() + nth(d.getDate()) + " of " + months[d.getMonth()] + ", "+ d.getFullYear() });
+
+
+
 
 	</script>
 </body>
