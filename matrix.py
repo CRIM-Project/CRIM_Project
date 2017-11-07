@@ -95,7 +95,7 @@ def get_counts(counts_wanted, data):
 	matrixB = [list(i) for i in zip(*matrixA)]
 		
 	
-	#print(total_sum)
+	print(total_sum)
 	pprint.pprint(matrixA)
 	pprint.pprint(matrixB)
 	return matrixA

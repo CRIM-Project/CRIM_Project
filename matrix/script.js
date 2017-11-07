@@ -2,25 +2,25 @@
 //////////////////////// Set-up ////////////////////////////
 ////////////////////////////////////////////////////////////
 
-var screenWidth = $(window).innerWidth(), 
+var screenWidth = $(window).innerWidth(),
 	mobileScreen = (screenWidth > 500 ? false : true);
 
 var margin = {left: 50, top: 10, right: 50, bottom: 10},
 	width = Math.min(screenWidth, 800) - margin.left - margin.right,
 	height = (mobileScreen ? 300 : Math.min(screenWidth, 800)*5/6) - margin.top - margin.bottom;
-			
+
 var svg = d3.select("#chart").append("svg")
 			.attr("width", (width + margin.left + margin.right))
 			.attr("height", (height + margin.top + margin.bottom));
-			
+
 var wrapper = svg.append("g").attr("class", "chordWrapper")
 			.attr("transform", "translate(" + (width / 2 + margin.left) + "," + (height / 2 + margin.top) + ")");;
-			
+
 var outerRadius = Math.min(width, height) / 2  - (mobileScreen ? 80 : 100),
 	innerRadius = outerRadius * 0.95,
 	opacityDefault = 0.7, //default opacity of chords
 	opacityLow = 0.02; //hover opacity of those chords not hovered over
-	
+
 //How many pixels should the two halves be pulled apart
 var pullOutSize = (mobileScreen? 20 : 50)
 
@@ -58,7 +58,7 @@ titleWrapper.append("line")
 	.attr("x2", (width/2 + margin.left - outerRadius - titleSeparate)*1.4 + 2*(outerRadius + titleSeparate))
 	.attr("y1", titleOffset+8)
 	.attr("y2", titleOffset+8);
-	
+
 ////////////////////////////////////////////////////////////
 /////////////////// Animated gradient //////////////////////
 ////////////////////////////////////////////////////////////
@@ -100,43 +100,46 @@ linearGradient.append("stop")
 linearGradient.append("stop")
 	.attr("offset","95%")
 	.attr("stop-color","#E8E8E8");
-	
+
 ////////////////////////////////////////////////////////////
 ////////////////////////// Data ////////////////////////////
 ////////////////////////////////////////////////////////////
 
-var Names = ["Administrative Staff","Crafts","Business Management","Basic Occupations","Health",
-			"IT","Juridical & Cultural","Management functions","Teachers",
-			"Salesmen & Service providers","Caretakers","Science & Engineering", "Other", "",
-			"Engineering","Education","Agriculture","Art, Language & Culture","Health","Behavior & Social Sciences","Economy",""];
+var Names = ['mt-sog', 'mt-pe', 'mt-cf', 'mt-fg', 'mt-id', 'mt-cd', 'mt-nid', 'mt-int', 'mt-csog', 'mt-cad', 'mt-hr', 'mt-fp','',
+'rt-om','rt-tnm','rt-tm','None','rt-q','rt-nm',''];//["Administrative Staff","Crafts","Business Management","Basic Occupations","Health",
+		//	"IT","Juridical & Cultural","Management functions","Teachers",
+	//	"Salesmen & Service providers","Caretakers","Science & Engineering", "Other", "",
+		//	"Engineering","Education","Agriculture","Art, Language & Culture","Health","Behavior & Social Sciences","Economy",""];
 
-var respondents = 17533, //Total number of respondents (i.e. the number that make up the total group
+var respondents = 3512, //Total number of respondents (i.e. the number that make up the total group
 	emptyPerc = 0.5, //What % of the circle should become empty
-	emptyStroke = Math.round(respondents*emptyPerc); 
+	emptyStroke = Math.round(respondents*emptyPerc);
+
+// 0,0,0,0,0,0,0,0,0,0,0,0,0, 13
+// 0,0,0,0,0,0,0, 7
+
 var matrix = [
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,232,65,44,57,39,123,1373,0], //Administratief personeel
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,32,0,0,11,0,0,24,0], //Ambachtslieden
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,173,43,52,55,36,125,2413,0], //Bedrijfsbeheer (vak)specialisten
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,32,16,13,23,10,37,54,0], //Elementaire beroepen
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,161,24,17,0,2089,85,60,0], //Gezondheidszorg (vak)specialisten
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,510,0,0,57,0,0,251,0], //IT (vak)specialisten
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,118,10,454,99,1537,271,0], //Juridisch en culturele (vak)specialisten
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,76,21,10,15,125,41,261,0], //Leidinggevende functies
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,32,2206,37,292,32,116,76,0], //Onderwijsgevenden
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,96,74,43,116,51,135,752,0], //Verkopers en verleners persoonlijke diensten
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,34,0,22,27,156,36,0], //Verzorgend personeel
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,1141,0,111,291,0,0,48,0], //Wetenschap en techniek (vak)specialisten
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,36,0,39,0,0,20,109,0], //Other
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,emptyStroke], //dummyBottom
-	[232,32,173,32,161,510,16,76,32,96,15,1141,36,0,0,0,0,0,0,0,0,0], //Techniek
-	[65,0,43,16,24,0,118,21,2206,74,34,0,0,0,0,0,0,0,0,0,0,0], //Onderwijs
-	[44,0,52,13,17,0,10,10,37,43,0,111,39,0,0,0,0,0,0,0,0,0], //Landbouw
-	[57,11,55,23,0,57,454,15,292,116,22,291,0,0,0,0,0,0,0,0,0,0], //Kunst, Taal en Cultuur
-	[39,0,36,10,2089,0,99,125,32,51,27,0,0,0,0,0,0,0,0,0,0,0], //Gezondheidszorg
-	[123,0,125,37,85,0,1537,41,116,135,156,0,20,0,0,0,0,0,0,0,0,0], //Gedrag & Maatschappij
-	[1373,24,2413,54,60,251,271,261,76,752,36,48,109,0,0,0,0,0,0,0,0,0], //Economie
-	[0,0,0,0,0,0,0,0,0,0,0,0,0,emptyStroke,0,0,0,0,0,0,0,0] //dummyTop
-];
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,136,540,323,127,9], //mt-fg
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,15,265,122,164,2], //mt-sog
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,17,36,132,62,49,1], //mt-id
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,42,1,72,19,9,0], //mt-cad
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,23,93,64,52,2], //mt-pe
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,24,118,26,28,1], //mt-nid
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,17,37,56,36,46,0], //mt-cd
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,28,2,17,0],//mt-cf
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,27,72,42,60,77,3], //mt-csog
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,24,38,30,41,1], //mt-hr
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,15,73,42,36,1], //mt-int
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,9,20,23,46,0], //mt-fp
+	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,emptyStroke], //dummyBottom
+	[5,0,17,0,42,17,2,5,4,1,27,2,0,0,0,0,0,0,0,0], //rt-om
+	[73,132,56,540,28,42,265,93,38,72,118,20,0,0,0,0,0,0,0,0],//rt-tnm
+	[42,30,36,323,19,26,122,2,64,62,60,23,0,0,0,0,0,0,0,0], //rt-tm
+	[0,1,0,9,1,0,2,2,1,1,3,0,0,0,0,0,0,0,0,0], //None
+	[36,17,49,127,46,9,164,52,41,28,77,46,0,0,0,0,0,0,0,0], //rt-q
+	[37,36,136,15,1,15,0,23,24,72,24,9,0,0,0,0,0,0,0,0], //rt-nm
+	[0,0,0,0,0,0,0,0,0,0,emptyStroke,0,0,0,0,0,0,0,0,0]]; //dummyTop
+
 //Calculate how far the Chord Diagram needs to be rotated clockwise to make the dummy
 //invisible chord center vertically
 var offset = (2 * Math.PI) * (emptyStroke/(respondents + emptyStroke))/4;
@@ -153,7 +156,7 @@ var arc = d3.svg.arc()
 	.startAngle(startAngle) //startAngle and endAngle now include the offset in degrees
 	.endAngle(endAngle);
 
-var path = stretchedChord() //Call the stretched chord function 
+var path = stretchedChord() //Call the stretched chord function
 	.radius(innerRadius)
 	.startAngle(startAngle)
 	.endAngle(endAngle)
@@ -192,7 +195,7 @@ g.append("text")
 	.attr("class", "titles")
 	.style("font-size", mobileScreen ? "8px" : "10px" )
 	.attr("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
-	.attr("transform", function(d,i) { 
+	.attr("transform", function(d,i) {
 		var c = arc.centroid(d);
 		return "translate(" + (c[0] + d.pullOutSize) + "," + c[1] + ")"
 		+ "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
@@ -205,7 +208,7 @@ g.append("text")
 ////////////////////////////////////////////////////////////
 //////////////////// Draw inner chords /////////////////////
 ////////////////////////////////////////////////////////////
- 
+
 wrapper.selectAll("path.chord")
 	.data(chord.chords)
 	.enter().append("path")
@@ -216,7 +219,7 @@ wrapper.selectAll("path.chord")
 	.style("pointer-events", function(d,i) { return (Names[d.source.index] === "" ? "none" : "auto"); }) //Remove pointer events from dummy strokes
 	.attr("d", path)
 	.on("mouseover", fadeOnChord)
-	.on("mouseout", fade(opacityDefault));	
+	.on("mouseout", fade(opacityDefault));
 
 ////////////////////////////////////////////////////////////
 ////////////////// Extra Functions /////////////////////////
