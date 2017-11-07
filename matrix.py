@@ -76,10 +76,29 @@ def get_counts(counts_wanted, data):
 				matrixviz[r] = {}
  
 		#rkey = matrixviz[rtype]
-
-
-	pprint.pprint(matrixviz)
-	return matrixviz
+	mtype_list =['mt-sog', 'mt-pe', 'mt-cf', 'mt-fg', 'mt-id', 'mt-cd', 'mt-nid', 'mt-int', 'mt-csog', 'mt-cad', 'mt-hr', 'mt-fp']
+	
+	total_sum = 0
+	for r_type in matrixviz:
+		total_sum += sum(matrixviz[r_type].values())
+		for m_type in mtype_list:
+			if m_type not in matrixviz[r_type].keys():
+				matrixviz[r_type][m_type] = 0
+	
+	matrixA = []
+	for r_type in matrixviz:
+		m_row = []
+		for m_type in matrixviz[r_type].keys():
+			m_row.append(matrixviz[r_type][m_type])
+		matrixA.append(m_row)
+		
+	matrixB = [list(i) for i in zip(*matrixA)]
+		
+	
+	#print(total_sum)
+	pprint.pprint(matrixA)
+	pprint.pprint(matrixB)
+	return matrixA
  
 #	pprint.pprint(tempdict)
 	#pprint.pprint(a_tempdict)
