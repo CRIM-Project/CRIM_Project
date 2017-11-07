@@ -142,6 +142,12 @@
 					.transition()
 					.duration(100);
 
+			//		tst
+			//			.classed("show", false)
+			//			.transition()
+			//			.duration(100);
+
+
 				focusRect
 					.transition()
 					.duration(100)
@@ -189,6 +195,11 @@
 					.classed("show", function(d){return d >= bottomPoint && d <= topPoint})
 					.transition()
 					.duration(100);
+
+		//			tst
+		//				.classed("show", function(d){return d >= bottomPoint && d <= topPoint})
+		//				.transition()
+		//				.duration(100);
 
 				focusRect
 					.attr("x", topAnchor) //was y
@@ -253,9 +264,14 @@
 			.append("text")
 			.attr("class","label")
 			.attr("x",50)
-			.attr("y",250)
+			.attr("y",200+ data.length ) //we want this to scale
 			.html( function(d){return "You're looking at this point: " + d.getDate() + nth(d.getDate()) + " of " + months[d.getMonth()] + ", "+ d.getFullYear() });
 
+	//		var tst= d3.select("body").selectAll("p")
+  //  .data(data)
+  //  .enter()
+  //  .append("p")
+  //  .text(function(d){return "You're looking at this point: " + d.getDate() + nth(d.getDate()) + " of " + months[d.getMonth()] + ", "+ d.getFullYear() });
 
 
 
