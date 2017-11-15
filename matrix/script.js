@@ -38,7 +38,7 @@ titleWrapper.append("text")
 	.style("font-size", mobileScreen ? "12px" : "16px" )
 	.attr("x", (width/2 + margin.left - outerRadius - titleSeparate))
 	.attr("y", titleOffset)
-	.text("Music Types");
+	.text("Relationship Types");
 titleWrapper.append("line")
 	.attr("class","titleLine left")
 	.attr("x1", (width/2 + margin.left - outerRadius - titleSeparate)*0.6)
@@ -51,7 +51,7 @@ titleWrapper.append("text")
 	.style("font-size", mobileScreen ? "12px" : "16px" )
 	.attr("x", (width/2 + margin.left + outerRadius + titleSeparate))
 	.attr("y", titleOffset)
-	.text("Relationship Types");
+	.text("Music Types");
 titleWrapper.append("line")
 	.attr("class","titleLine right")
 	.attr("x1", (width/2 + margin.left - outerRadius - titleSeparate)*0.6 + 2*(outerRadius + titleSeparate))
@@ -104,6 +104,26 @@ linearGradient.append("stop")
 ////////////////////////////////////////////////////////////
 ////////////////////////// Data ////////////////////////////
 ////////////////////////////////////////////////////////////
+//'mt-sog' : Soggetto
+// 'mt-pe' : Periodic Entries
+//'mt-cf' : Cantus Firmus
+//'mt-fg' : Fuga
+//'mt-id' : Imitative Duos
+//'mt-cd' : Contrapuntal Duo
+// 'mt-nid' :
+// 'mt-int' :
+//'mt-csog' : Counter Soggetto
+//'mt-cad' :
+//'mt-hr' :
+//'mt-fp' :
+
+//'rt-om':
+//'rt-tnm' :
+//'rt-tm'
+//'None'
+//'rt-q':
+//'rt-nm' :
+
 
 var Names = ['mt-sog', 'mt-pe', 'mt-cf', 'mt-fg', 'mt-id', 'mt-cd', 'mt-nid', 'mt-int', 'mt-csog', 'mt-cad', 'mt-hr', 'mt-fp','',
 'rt-om','rt-tnm','rt-tm','None','rt-q','rt-nm',''];//["Administrative Staff","Crafts","Business Management","Basic Occupations","Health",
@@ -220,6 +240,21 @@ wrapper.selectAll("path.chord")
 	.attr("d", path)
 	.on("mouseover", fadeOnChord)
 	.on("mouseout", fade(opacityDefault));
+
+	////////////////////////////////////////////////////////////
+	///////////////////////// Tooltip //////////////////////////
+	////////////////////////////////////////////////////////////
+
+	//Arcs
+	g.append("title")
+		.text(function(d, i) {return Math.round(d.value) + " sessions in " + Names[i];});
+
+	//Chords
+	chords.append("title")
+		.text(function(d) {
+			return [Math.round(d.source.value), " sessions from ", Names[d.target.index], " to ", Names[d.source.index]].join(""); 
+		});
+
 
 ////////////////////////////////////////////////////////////
 ////////////////// Extra Functions /////////////////////////
