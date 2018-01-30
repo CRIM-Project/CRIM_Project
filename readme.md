@@ -7,7 +7,101 @@ Convert and organize CRIM data set for furture analysis.
 * [CRIM Homepage](https://sites.google.com/a/haverford.edu/crim-project/) - Check this out!
 
 	to pull the data from the api and write it to CSVs run:
-		`$python3 counts.py`
+
+		`$ python3 counts.py`  
+
+In the future a command line interface will be added and the functionally of the script will be expanded.
+
+As of right now this script writes 7 csvs and one json file. Below is a brief description of each:
+
+##### ema.csv / ema.json
+As a csv this file has two features *SongTitle* and *Counts*. *SongTitle* is the title of the piece (e.g. Lassus Roland de : Lassus. Susanne un jour ) and *Counts* is a list of dictionary items. Each dictionary has the keys *measures* and *Song_From*. The *measures* information was pulled from the ema field of the json (which was pulled from the api). The *measures* value signifies which measures of the *SongTitle* were related to the *Song_From* in the users session. Below is an example of one row of the csv  
+
+```
+Lassus Roland de : Lassus. Susanne un jour, [ {'measures': '1-2', 'Song_From': 'Lassus, Roland de : Lassus. Susanne un jour'}, ... , {'measures': '31-35', 'Song_From': 'Lassus, Roland de : Lassus. Susanne un jour'} ]
+```
+
+The ema.json contains the exact same information but in a .json format
+
+##### relationship_types.csv  
+This is just a count of the relationships of all of the sessions.   
+This file looks like:
+```
+relationship_types,counts
+rt-q,611
+rt-tm,697
+rt-tnm,1166
+None,19
+rt-om,108
+rt-nm,354
+```
+##### user_counts.csv
+This is just a count of the sessions each user has created. In Omeka each user is assigned a unique id number which is listed as the *users* value.  
+ This file looks like:
+```
+users,counts
+1,3
+6,19
+5,8
+15,583
+13,2
+...
+```
+
+##### title_counts.csv
+This is a count of for each piece , how many times it was referenced in a session.   
+This file looks like:
+
+```
+titles,counts
+Lassus Roland de : Lassus. Susanne un jour,57
+Lassus Roland de : Lassus. Missa Susanne un jour (Kyrie),19
+Forestier Mathurin: Forestier. Missa Baisés moy ma doulce amye (Kyrie),9
+Lupi Didier: Lupi. Susanne un jour,11
+Sermisy Claudin de: Sermisy. Tota pulchra es,147
+Josquin Des Prés : Josquin. Baises moy,38
+...
+```
+##### assertion_types.csv
+This is a count of the assertion types of all of the sessions.   
+This file looks like:
+```
+assertion_types,counts
+mt-sog,472
+mt-pe,153
+mt-cf,39
+mt-fg,869
+mt-id,221
+...
+```
+##### assertion_titles.csv
+This is a count of the number of assertion made with each piece.   
+This file looks like:
+```
+assertion_titles,counts
+None,2
+Forestier Mathurin: Forestier. Missa Baisés moy ma doulce amye (Kyrie),8
+Lupi Didier: Lupi. Susanne un jour,4
+Sermisy Claudin de: Sermisy. Tota pulchra es,16
+Josquin Des Prés : Josquin. Baises moy,7
+...
+```
+
+##### assertion_scores.csv
+This is a count of the number of assertion made for each unique score id.   
+This file looks like:
+
+```
+assertion_scores,counts
+c11,1782
+c25,31
+c13,4
+c392,1
+c406,1
+c77,1
+c140,1
+...
+```
 
 ## Visualizations
 Currently we are working on two visualizations.
