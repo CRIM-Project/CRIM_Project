@@ -112,13 +112,13 @@ The heat map visualization can be accessed in the file temp_html.html. While the
 
 ##### Example score title search:
 ![Example score title search]( readme_images/temp_html_input.png)
-	In this example we are searching for the score titled, "Lassus, Roland de : Lassus. Susanne un jour."
+		In this example we are searching for the score titled, "Lassus, Roland de : Lassus. Susanne un jour."
 
-it generates information for that specific score from the ema.json file, which is a json that contains all the scores in the CRIM API, where each score has information about what other musical piece each of its measure stems from. The information that is returned as an output from the search is a list of the names of the different musical piece influences that is in this score as well as what measure(s) each of these musical influences can be found in the score. Note that the list is made up of the names of scores that are also from the CRIM API. 
+it generates information for that specific score from the ema.json file, which is a json that contains all the scores in the CRIM API, where each score has information about what other musical piece each of its measure stems from. The information that is returned as an output from the search is a list of the names of the different musical piece influences that is in this score as well as what measure(s) each of these musical influences can be found in the score. Note that the list is made up of the names of scores that are also from the CRIM API.
 
 ##### Example output of search:
 ![Example output of search]( readme_images/temp_html_output.png "In this example output...")
-	This example output shows a list of the names of the different musical piece influences in the Lassus, Roland de : Lassus. Susanne un jour piece and the measure(s) where they can each be found.
+		This example output shows a list of the names of the different musical piece influences in the Lassus, Roland de : Lassus. Susanne un jour piece and the measure(s) where they can each be found.
 
 
 
