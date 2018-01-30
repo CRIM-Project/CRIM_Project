@@ -23,17 +23,84 @@ Lassus Roland de : Lassus. Susanne un jour, [ {'measures': '1-2', 'Song_From': '
 The ema.json contains the exact same information but in a .json format
 
 ##### relationship_types.csv  
-
+This is just a count of the relationships of all of the sessions.   
+This file looks like:
+```
+relationship_types,counts
+rt-q,611
+rt-tm,697
+rt-tnm,1166
+None,19
+rt-om,108
+rt-nm,354
+```
 ##### user_counts.csv
+This is just a count of the sessions each user has created. In Omeka each user is assigned a unique id number which is listed as the *users* value.  
+ This file looks like:
+```
+users,counts
+1,3
+6,19
+5,8
+15,583
+13,2
+...
+```
 
 ##### title_counts.csv
+This is a count of for each piece , how many times it was referenced in a session.   
+This file looks like:
 
+```
+titles,counts
+Lassus Roland de : Lassus. Susanne un jour,57
+Lassus Roland de : Lassus. Missa Susanne un jour (Kyrie),19
+Forestier Mathurin: Forestier. Missa Baisés moy ma doulce amye (Kyrie),9
+Lupi Didier: Lupi. Susanne un jour,11
+Sermisy Claudin de: Sermisy. Tota pulchra es,147
+Josquin Des Prés : Josquin. Baises moy,38
+...
+```
 ##### assertion_types.csv
-
+This is a count of the assertion types of all of the sessions.   
+This file looks like:
+```
+assertion_types,counts
+mt-sog,472
+mt-pe,153
+mt-cf,39
+mt-fg,869
+mt-id,221
+...
+```
 ##### assertion_titles.csv
+This is a count of the number of assertion made with each piece.   
+This file looks like:
+```
+assertion_titles,counts
+None,2
+Forestier Mathurin: Forestier. Missa Baisés moy ma doulce amye (Kyrie),8
+Lupi Didier: Lupi. Susanne un jour,4
+Sermisy Claudin de: Sermisy. Tota pulchra es,16
+Josquin Des Prés : Josquin. Baises moy,7
+...
+```
 
 ##### assertion_scores.csv
+This is a count of the number of assertion made for each unique score id.   
+This file looks like:
 
+```
+assertion_scores,counts
+c11,1782
+c25,31
+c13,4
+c392,1
+c406,1
+c77,1
+c140,1
+...
+```
 
 ## Visualizations
 Currently we are working on two visualizations.
