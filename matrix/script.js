@@ -5,9 +5,9 @@
 var screenWidth = $(window).innerWidth(),
 	mobileScreen = (screenWidth > 500 ? false : true);
 
-var margin = {left: 50, top: 10, right: 50, bottom: 10},
-	width = Math.min(screenWidth, 800) - margin.left - margin.right,
-	height = (mobileScreen ? 300 : Math.min(screenWidth, 800)*5/6) - margin.top - margin.bottom;
+var margin = {left: 30, top: 10, right: 30, bottom: 10},
+	width = Math.min(screenWidth, 900) - margin.left - margin.right,
+	height = (mobileScreen ? 300 : Math.min(screenWidth, 900)*5/5) - margin.top - margin.bottom;
 
 var svg = d3.select("#chart").append("svg")
 			.attr("width", (width + margin.left + margin.right))
@@ -19,7 +19,7 @@ var wrapper = svg.append("g").attr("class", "chordWrapper")
 var outerRadius = Math.min(width, height) / 2  - (mobileScreen ? 80 : 100),
 	innerRadius = outerRadius * 0.95,
 	opacityDefault = 0.7, //default opacity of chords
-	opacityLow = 0.02; //hover opacity of those chords not hovered over
+	opacityLow = 0; //hover opacity of those chords not hovered over
 
 //How many pixels should the two halves be pulled apart
 var pullOutSize = (mobileScreen? 20 : 50)
@@ -190,8 +190,9 @@ var g = wrapper.selectAll("g.group")
 	.data(chord.groups)
 	.enter().append("g")
 	.attr("class", "group")
-	.on("mouseover", fade(opacityLow))
-	.on("mouseout", fade(opacityDefault));
+	.on("click", fade(opacityLow));
+	//.on("mouseover", fade(opacityLow))
+	//.on("mouseout", fade(opacityDefault));
 
 g.append("path")
 	.style("stroke", function(d,i) { return (Names[i] === "" ? "none" : "#00A1DE"); })
@@ -229,12 +230,12 @@ g.append("text")
 //////////////////// Draw inner chords /////////////////////
 ////////////////////////////////////////////////////////////
 
-wrapper.selectAll("path.chord")
+var chords = wrapper.selectAll("path.chord")
 	.data(chord.chords)
 	.enter().append("path")
 	.attr("class", "chord")
 	.style("stroke", "none")
-	.style("fill", "url(#animatedGradient)") //An SVG Gradient to give the impression of a flow from left to right
+	.style("fill", "black") //An SVG Gradient to give the impression of a flow from left to right
 	.style("opacity", function(d) { return (Names[d.source.index] === "" ? 0 : opacityDefault); }) //Make the dummy strokes have a zero opacity (invisible)
 	.style("pointer-events", function(d,i) { return (Names[d.source.index] === "" ? "none" : "auto"); }) //Remove pointer events from dummy strokes
 	.attr("d", path)
