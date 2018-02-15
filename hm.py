@@ -25,6 +25,7 @@ def get_counts(counts_wanted, data):
 	title_counts = {}
 	relationship_counts = {}
 	ema_dictionary = {}
+	t_dict = {}
 
 
 	r_keys = [ u'titleA', u'titleB', u'scoreA_ema', u'scoreB_ema', u'direction', u'types']  # ideally not use all of these?
@@ -72,19 +73,17 @@ def get_counts(counts_wanted, data):
 				temp = title_counts[title]
 				title_counts[title] = temp+1
 				ema_sub_dict = {'measures': relation['scoreA_ema'].split('/')[0] , 'Song_From': relation['titleB'] }#, 'Direction': relation['direction'] }
-				ema_sub_dict['typee'] = get_key(relation, 'types')
-				#pprint.pprint(ema_sub_dict)
+				ema_sub_dict['type'] = get_key(relation, 'types')
 				ema_dictionary[title] = ema_dictionary[title]+ [ema_sub_dict]
+
 			else: #doesnt exist yet
 				title_counts[title]= 1
 				ema_sub_dict = {'measures': relation['scoreA_ema'].split('/')[0] , 'Song_From': relation['titleA'], }#'Direction': relation['direction'] }
-				ema_sub_dict['typee'] = get_key(relation, 'types')
+				ema_sub_dict['type'] = get_key(relation, 'types')
 				ema_dictionary[title] = [ema_sub_dict]
-				#print ("ema_1", relation['scoreA_ema'])
-				#print ("ema_2", relation['scoreA_ema'].split('/')[0])
-				#print ("ema_3", relation['scoreA_ema'].split('/'), "\n")
 
-
+			
+		#pprint.pprint(t_dict)
 
 
 
@@ -94,7 +93,8 @@ def get_counts(counts_wanted, data):
 	#pprint.pprint(a_tempdict)
 	#pprint.pprint(ema_dictionary)
 
-	return ema_dictionary
+	#return ema_dictionary
+	return t_dict
 
 def basic_dict_csv(d,header,filename):
 	with open(filename, 'w') as f:
@@ -123,7 +123,7 @@ def main():
 	#print ('Relationship(direction): Count')
 	#pprint.pprint(relationship_counts,indent=2)
 
-	to_json(ema_dictionary, 'ema_test.json')
+	to_json(ema_dictionary, 'ema_test_2.json')
 	#basic_dict_csv(ema_dictionary, 'ema', 'ema.csv')
 	#basic_dict_csv(tempdict['types'],'realationship_types', 'relationship_types.csv')
 	#basic_dict_csv(count_list,'users','user_counts.csv')

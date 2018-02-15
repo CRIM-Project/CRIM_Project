@@ -1,0 +1,37 @@
+[
+  {
+    group: "Manchicourt. Missa Quo abiit dilectus tuus (Agnus)",
+    data: [
+        {
+            label: ": Manchicourt. Quo abiit dilectus tuus",
+            data: [
+              {
+              timeRange: [1, 5],
+              val: "rt-tnm"
+            }
+          ]
+        },
+        {
+          label: "Manchicourt. Missa Quo abiit dilectus tuus (Agnus)",
+          data: [
+            {
+              timeRange: [10, 14],
+              val: "rt-tm"
+            },
+            {
+              timeRange: [5, 9],
+              val:"rt-tm"
+            },
+            {
+              timeRange: [14, 21],
+              val: "rt-tm"
+            },
+            {
+              timeRange: [14, 19],
+              val: "rt-tm"
+            }
+          ]
+        }
+        ]
+        }
+        ]
