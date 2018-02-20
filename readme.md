@@ -14,7 +14,7 @@ In the future a command line interface will be added and the functionally of the
 
 As of right now this script writes 7 csvs and one json file. Below is a brief description of each:
 
-##### ema.csv / ema.json
+##### 1. ema.csv / 2. ema.json
 As a csv this file has two features *SongTitle* and *Counts*. *SongTitle* is the title of the piece (e.g. Lassus Roland de : Lassus. Susanne un jour ) and *Counts* is a list of dictionary items. Each dictionary has the keys *measures* and *Song_From*. The *measures* information was pulled from the ema field of the json (which was pulled from the api). The *measures* value signifies which measures of the *SongTitle* were related to the *Song_From* in the users session. Below is an example of one row of the csv  
 
 ```
@@ -23,7 +23,7 @@ Lassus Roland de : Lassus. Susanne un jour, [ {'measures': '1-2', 'Song_From': '
 
 The ema.json contains the exact same information but in a .json format
 
-##### relationship_types.csv  
+##### 3. relationship_types.csv  
 This is just a count of the relationships of all of the sessions.   
 This file looks like:
 ```
@@ -35,7 +35,7 @@ None,19
 rt-om,108
 rt-nm,354
 ```
-##### user_counts.csv
+##### 4. user_counts.csv
 This is just a count of the sessions each user has created. In Omeka each user is assigned a unique id number which is listed as the *users* value.  
  This file looks like:
 ```
@@ -48,7 +48,7 @@ users,counts
 ...
 ```
 
-##### title_counts.csv
+##### 5. title_counts.csv
 This is a count of for each piece , how many times it was referenced in a session.   
 This file looks like:
 
@@ -62,7 +62,7 @@ Sermisy Claudin de: Sermisy. Tota pulchra es,147
 Josquin Des Prés : Josquin. Baises moy,38
 ...
 ```
-##### assertion_types.csv
+##### 6. assertion_types.csv
 This is a count of the assertion types of all of the sessions.   
 This file looks like:
 ```
@@ -74,7 +74,7 @@ mt-fg,869
 mt-id,221
 ...
 ```
-##### assertion_titles.csv
+##### 7. assertion_titles.csv
 This is a count of the number of assertion made with each piece.   
 This file looks like:
 ```
@@ -87,7 +87,7 @@ Josquin Des Prés : Josquin. Baises moy,7
 ...
 ```
 
-##### assertion_scores.csv
+##### 8. assertion_scores.csv
 This is a count of the number of assertion made for each unique score id.   
 This file looks like:
 
@@ -105,7 +105,7 @@ c140,1
 
 ## Visualizations
 Currently we are working on two visualizations.
-	One is a a modified chord diagram to visualize the relationship between musical types and relationship types. This was largerly inspired by visualcinnamon's blog [post](https://www.visualcinnamon.com/2015/08/stretched-chord.html). This visualization is in the `matrix/` directory.
+	One is a a modified chord diagram to visualize the relationship between musical types and relationship types. This was largely inspired by visualcinnamon's blog [post](https://www.visualcinnamon.com/2015/08/stretched-chord.html). This visualization is in the `matrix/` directory.
 
 ##### Heat Map Visualization
 The heat map visualization can be accessed in the file temp_html.html. While there is currently no visualization on this page, we have built a script in JavaScript that aggregates all the information needed to build a heat map for a particular piece. The way the script works is that given a score title from the CRIM API (http://92.154.49.37/CRIM/api/citation),
@@ -126,8 +126,19 @@ it generates information for that specific score from the ema.json file, which i
 This example output shows a list of the names of the different musical piece influences in the Lassus, Roland de : Lassus. Susanne un jour piece and the measure(s) where they can each be found.
 ```
 
+##### Next steps
+We are in the process of creating a parallel timelines layout (swimlanes) for representing state of time-series over time. This time-line would be the measures in a score. The code for this is cloned from [vasturiano's repo](https://github.com/vasturiano/timelines-chart).
+
+Richard has suggested that " we could have the 'groups' assigned to each Work_ID, then the 'labels' could be the individual Analyst_IDs (that is, the folks who made observations about each piece).  Colors could map to musical types or relationship types (two different views, I suppose).  Tooltip could reveal basic information about the item, plus a URL link to the music.  The timeline at the bottom could be from the start to the end of each piece".
+
+###### Droplet
+We are in the process of starting a website to better collect all of our work on this Droplet: http://159.65.177.99/
 
 
-## Contributors
 
-Maddy Hodges, Tosin Alliyu
+
+
+## Contributors :tada:
+
+:octocat: [Maddy Hodges]((https://github.com/Mfhodges) & [Tosin Alliyu](https://github.com/TA2018)  
+With support by [Haverford College Digital Scholarship](https://github.com/hcdigitalscholarship)
