@@ -58,7 +58,7 @@ def get_counts(counts_wanted, data):
 		if info2['assertions'] != []:
 			assertion = info2['assertions'][0]
 		versions = info2['scores']
-		print(relation)
+		print(info2['user'])
 
 
 		for x in versions:
