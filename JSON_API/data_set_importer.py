@@ -2,8 +2,6 @@
 
 """
 Provide routines to import CRIM project data set into list of lists format.
-Dylan Slack
-
 """
 
 import json, csv, urllib.request
