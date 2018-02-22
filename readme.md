@@ -140,5 +140,5 @@ We are in the process of starting a website to better collect all of our work on
 
 ## Contributors :tada:
 
-:octocat: [Maddy Hodges]((https://github.com/Mfhodges) & [Tosin Alliyu](https://github.com/TA2018)  
+:octocat: [Maddy Hodges](https://github.com/Mfhodges) & [Tosin Alliyu](https://github.com/TA2018)  
 With support by [Haverford College Digital Scholarship](https://github.com/hcdigitalscholarship)
