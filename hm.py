@@ -42,7 +42,7 @@ def get_counts(counts_wanted, data):
 
 		info = rel["text"]
 		info2 = json.loads(info) # turns 'text' into usable dict
-
+		#pprint.pprint(info);
 		for i, char in enumerate(info):
 			if char == "r" and info[i-1] == "e" and info[i-2] == "s" and info[i-3] == "u" and info[i+1] == '"':
 				usr = info[i+4]
@@ -58,14 +58,15 @@ def get_counts(counts_wanted, data):
 		if info2['assertions'] != []:
 			assertion = info2['assertions'][0]
 		versions = info2['scores']
-		#print(versions)
+		print(relation)
 
 
 		for x in versions:
 
 			title = x['title']
+			#userr = x['user']
 			#print(x)
-
+			"""
 			if title[:2] == ': ':
 				title = title[2:] #cleaning some text
 
@@ -82,7 +83,7 @@ def get_counts(counts_wanted, data):
 				ema_sub_dict['type'] = get_key(relation, 'types')
 				ema_dictionary[title] = [ema_sub_dict]
 
-			
+		"""
 		#pprint.pprint(t_dict)
 
 
@@ -94,7 +95,7 @@ def get_counts(counts_wanted, data):
 	#pprint.pprint(ema_dictionary)
 
 	#return ema_dictionary
-	return t_dict
+	#return t_dict
 
 def basic_dict_csv(d,header,filename):
 	with open(filename, 'w') as f:
@@ -123,7 +124,7 @@ def main():
 	#print ('Relationship(direction): Count')
 	#pprint.pprint(relationship_counts,indent=2)
 
-	to_json(ema_dictionary, 'ema_test_2.json')
+	#to_json(ema_dictionary, 'ema_test_2.json')
 	#basic_dict_csv(ema_dictionary, 'ema', 'ema.csv')
 	#basic_dict_csv(tempdict['types'],'realationship_types', 'relationship_types.csv')
 	#basic_dict_csv(count_list,'users','user_counts.csv')
