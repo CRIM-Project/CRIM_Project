@@ -134,7 +134,14 @@ Richard has suggested that " we could have the 'groups' assigned to each Work_ID
 ###### Droplet
 We are in the process of starting a website to better collect all of our work on this Droplet: http://159.65.177.99/
 
-
+###### To do list
+- [ ] Have view with users, scores and music|relationships types as the color
+- [ ] Have relationship types ( y-axis ), scores, music types as color
+- [ ] fix measures axis line up
+- [ ] view heatmap for one score at a time
+- [ ] look into actual heatmap opacity functionality
+- [ ] look into being able to toggle between different types of axis
+- [ ] make scripts to generate the jsons that the above visualizations will require
 
 
 
