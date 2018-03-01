@@ -90,7 +90,7 @@ function genData(){
     forVis.push(dataOut);
   }
   var strr = JSON.stringify(forVis, null, 2);
-  console.log(strr);
+  //console.log(strr);
 
   return forVis;
 }

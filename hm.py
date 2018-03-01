@@ -26,6 +26,8 @@ def get_counts(counts_wanted, data):
 	relationship_counts = {}
 	ema_dictionary = {}
 	t_dict = {}
+	user_title_viz = {}
+	user_lst = []
 
 
 	r_keys = [ u'titleA', u'titleB', u'scoreA_ema', u'scoreB_ema', u'direction', u'types']  # ideally not use all of these?
@@ -43,6 +45,7 @@ def get_counts(counts_wanted, data):
 		info = rel["text"]
 		info2 = json.loads(info) # turns 'text' into usable dict
 		#pprint.pprint(info);
+		"""
 		for i, char in enumerate(info):
 			if char == "r" and info[i-1] == "e" and info[i-2] == "s" and info[i-3] == "u" and info[i+1] == '"':
 				usr = info[i+4]
@@ -58,15 +61,28 @@ def get_counts(counts_wanted, data):
 		if info2['assertions'] != []:
 			assertion = info2['assertions'][0]
 		versions = info2['scores']
-		print(info2['user'])
+		"""
+		for x in info2:
+			u_id = x["user"]
+			if u_id not in user_lst:
+				user_lst.append(u_id)
+				user_title_viz[u_id] = {}
+
+				versions = x['scores']
+				for x in versions:
+					title = x['title']
+
+			else
 
 
+
+		"""
 		for x in versions:
 
 			title = x['title']
 			#userr = x['user']
 			#print(x)
-			"""
+
 			if title[:2] == ': ':
 				title = title[2:] #cleaning some text
 
