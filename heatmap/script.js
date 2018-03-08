@@ -37,7 +37,8 @@ function findArray(value, obJ){
 
 function genData(){
   //console.log("vv", JSON.stringify(jsonF));
-  //console.log(fromsongs);
+  console.log("got here");
+  console.log("title", title);
   var forVis =[];
   var x = 0;
   for(var title in jsonfile){
