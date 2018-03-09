@@ -4,10 +4,7 @@ import json
 import pprint
 import csv
 
-# Modify this to inlcude desired counts
-counts_wanted = ['user', 'title', 'relationship_type', 'assertion_type']
 
-# Rerturn counts for desired count types
 def get_key(dictt, keyy):
 	try:
 		answer = str(dictt[keyy])
@@ -20,98 +17,94 @@ def get_key(dictt, keyy):
 		answer = "None"
 	return answer
 
-def get_counts(counts_wanted, data):
-	user_counts = {}
-	title_counts = {}
-	relationship_counts = {}
-	ema_dictionary = {}
-	t_dict = {}
+def clean_title(title_name):
+	#print(title_name[0])
+	if title_name[0] == ":":
+		#print("before: ", title_name)
+		title_name = title_name[2:]
+	#print("now: ", title_name)
+	return title_name
+
+def get_catLabel(mea_num):
+
+	categoryLabels = ["part_1", "part_2", "part_3", "part_4", "part_5", "part_6", "part_7"]
+	catLabels = {"part_1":range(0, 40), "part_2":range(40, 80), "part_3":range(80, 120),
+				"part_4":range(120, 160), "part_5":range(160, 200), "part_6":range(200, 240), "part_7":range(240, 10000)}
+	#categoryLabels = [0-40, 40-80, 80-120, 120-160, 160-200, 200-240, 240-above]
+	num = mea_num.split("-")
+	if len(num) == 1:
+		num = int(num[0])
+	else:
+		num = int((int(num[0])+ int(num[1]))/2)
+	
+	for key, value in catLabels.items():
+		if num in value:
+			return key
+	return "Error"
+
+
+
+
+
+
+
+def get_user_dict(data):
 	user_title_viz = {}
 	user_lst = []
-
-
-	r_keys = [ u'titleA', u'titleB', u'scoreA_ema', u'scoreB_ema', u'direction', u'types']  # ideally not use all of these?
-	#r_keys = [u'scoreA_meiids', u'titleA', u'titleB', u'scoreA_ema', u'scoreB_ema', u'scoreA', u'scoreB', u'cid', u'boolDir', u'direction', u'comment', u'scoreB_meiids', u'scoreAassert', u'scoreBassert', u'id', u'types']  # ideally not use all of these?
-
-	a_keys = [u'ema', u'score', u'title', u'types']
-
-	tempdict = dict(zip(r_keys,[None]*len(r_keys)))
-
-	a_tempdict = dict(zip(a_keys,[None]*len(a_keys)))
 
 
 	for rel in data:
 
 		info = rel["text"]
 		info2 = json.loads(info) # turns 'text' into usable dict
-		#pprint.pprint(info);
-		"""
-		for i, char in enumerate(info):
-			if char == "r" and info[i-1] == "e" and info[i-2] == "s" and info[i-3] == "u" and info[i+1] == '"':
-				usr = info[i+4]
-				if info[i+5] != '"':
-					usr = usr + info[i+5]
-				if usr not in user_counts:
-					user_counts[usr] = 1
-				else:
-					user_counts[usr] += 1
 
 		relation = info2['relationships'][0]
-		#print (info2['assertions'])
+		u_id = info2['user']
 		if info2['assertions'] != []:
 			assertion = info2['assertions'][0]
 		versions = info2['scores']
-		"""
-		for x in info2:
-			u_id = x["user"]
-			if u_id not in user_lst:
-				user_lst.append(u_id)
-				user_title_viz[u_id] = {}
 
-				versions = x['scores']
-				for x in versions:
-					title = x['title']
+		mea = (relation['scoreA_ema'].split('/')[0]).split(",")
+		# for x in versions:
+		# 	pprint.pprint(x)
+		# 	#title = x['title']
 
-			else
+		if u_id not in user_lst:
+			user_lst.append(u_id)
+			user_title_viz[u_id] = []
+			#print(mea)
+
+			if len(mea) == 1:
+				user_sub_dict = {'measures': mea[0] , 'Song_A': clean_title(relation['titleA']), 'Song_B': clean_title(relation['titleB']) }#, 'Direction': relation['direction'] }
+				#user_sub_dict['typee'] = get_key(relation, 'types')
+				user_sub_dict['typee'] = get_catLabel(mea[0])
+				user_title_viz[u_id] = [user_sub_dict]
+			else:
+				for m_num in mea:
+					user_sub_dict = {'measures': m_num , 'Song_A': clean_title(relation['titleA']), 'Song_B': clean_title(relation['titleB']) }#, 'Direction': relation['direction'] }
+					#user_sub_dict['typee'] = get_key(relation, 'types')
+					user_sub_dict['typee'] = get_catLabel(m_num)
+					user_title_viz[u_id] = [user_sub_dict]
 
 
-
-		"""
-		for x in versions:
-
-			title = x['title']
-			#userr = x['user']
-			#print(x)
-
-			if title[:2] == ': ':
-				title = title[2:] #cleaning some text
-
-			if title in title_counts.keys():
-				temp = title_counts[title]
-				title_counts[title] = temp+1
-				ema_sub_dict = {'measures': relation['scoreA_ema'].split('/')[0] , 'Song_From': relation['titleB'] }#, 'Direction': relation['direction'] }
-				ema_sub_dict['type'] = get_key(relation, 'types')
-				ema_dictionary[title] = ema_dictionary[title]+ [ema_sub_dict]
-
-			else: #doesnt exist yet
-				title_counts[title]= 1
-				ema_sub_dict = {'measures': relation['scoreA_ema'].split('/')[0] , 'Song_From': relation['titleA'], }#'Direction': relation['direction'] }
-				ema_sub_dict['type'] = get_key(relation, 'types')
-				ema_dictionary[title] = [ema_sub_dict]
-
-		"""
-		#pprint.pprint(t_dict)
+		else:
+			if len(mea) == 1:
+				user_sub_dict = {'measures': mea[0] , 'Song_A': clean_title(relation['titleA']), 'Song_B': clean_title(relation['titleB']) }#, 'Direction': relation['direction'] }
+				#user_sub_dict['typee'] = get_key(relation, 'types')
+				user_sub_dict['typee'] = get_catLabel(mea[0])
+				user_title_viz[u_id] = user_title_viz[u_id] + [user_sub_dict]
+			else:
+				for m_num in mea:
+					user_sub_dict = {'measures': m_num, 'Song_A': clean_title(relation['titleA']), 'Song_B': clean_title(relation['titleB']) }#, 'Direction': relation['direction'] }
+					#user_sub_dict['typee'] = get_key(relation, 'types')
+					user_sub_dict['typee'] = get_catLabel(m_num)
+					user_title_viz[u_id] = user_title_viz[u_id] + [user_sub_dict]
 
 
 
+	#pprint.pprint(user_title_viz)
+	return user_title_viz
 
-
-	#pprint.pprint(tempdict)
-	#pprint.pprint(a_tempdict)
-	#pprint.pprint(ema_dictionary)
-
-	#return ema_dictionary
-	#return t_dict
 
 def basic_dict_csv(d,header,filename):
 	with open(filename, 'w') as f:
@@ -130,24 +123,11 @@ def main():
 	crim = data_set_importer.get_json()
 	crim.set_url(crim.CRIM_url)
 	data = crim.get_data()
-	ema_dictionary = get_counts(counts_wanted, data)
-	#print ('User: Count')
-	#pprint.pprint(count_list)
-	#print ("\n")
-	#print ('Song: Count')
-	#pprint.pprint(title_counts)
-	#print ("\n")
-	#print ('Relationship(direction): Count')
-	#pprint.pprint(relationship_counts,indent=2)
+	ema_dictionary = get_user_dict(data)
 
-	#to_json(ema_dictionary, 'ema_test_2.json')
-	#basic_dict_csv(ema_dictionary, 'ema', 'ema.csv')
-	#basic_dict_csv(tempdict['types'],'realationship_types', 'relationship_types.csv')
-	#basic_dict_csv(count_list,'users','user_counts.csv')
-	#basic_dict_csv(title_counts,'titles','title_counts.csv')
-	#basic_dict_csv(a_tempdict['types'], 'assertion_types', 'assertion_types.csv')
-	#basic_dict_csv(a_tempdict['title'], 'assertion_titles', 'assertion_titles.csv')
-	#basic_dict_csv(a_tempdict['score'], 'assertion_scores', 'assertion_scores.csv')
+
+	to_json(ema_dictionary, 'user_timeline.json')
+
 
 
 

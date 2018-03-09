@@ -40,6 +40,13 @@ function getRandomData(ordinal = false) {
         return {
           timeRange: [start, end],
           val: ordinal ? categoryLabels[Math.ceil(Math.random()*nCategories)] : Math.random()
+          /* if ordinal:
+                categoryLabels[Math.ceil(Math.random()*nCategories)]
+              else
+                Math.random
+
+
+          */
           //labelVal: is optional - only displayed in the labels
         };
       });
