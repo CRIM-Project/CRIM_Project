@@ -59,7 +59,7 @@
 
 
 <div>
-  <p>test</p>
+  <p>footer</p>
 </div>
 
  <script type="text/javascript">
@@ -101,10 +101,17 @@ function buildResults(results){
     var li = document.createElement("li");
     var children = ul.children.length + 1;
     li.setAttribute("id", "result"+children);
-    li.appendChild(document.createTextNode(fromsongs[i]));
+    li.appendChild(document.createTextNode(JSON.stringify(fromsongs[i])));
     ul.appendChild(li);
   }
 }
+
+/*
+>>> JSON.stringify(jsonfile["Benedicta es"][1])
+>>> "{"Song_From":": Benedicta es,cælorum Regina","measures":"1","typee":"rt-tnm"}"
+*/
+
+
 
 
 /// hold execution to build chart until something has been searched ///
@@ -130,7 +137,7 @@ function search(){
     buildResults(jsonfile[title]);
 
     TimelinesChart()
-      .data(genData(jsonfile, "group_label",  "Song_From"))
+      .data(genData(jsonfile,title, "group_label",  "Song_From"))
       .zQualitative(true)
       .timeFormat("%y")
       (document.getElementById('myPlot'));
@@ -139,8 +146,6 @@ function search(){
 
       //var no_results = Object.keys(results).length;
       //console.log("no. results",no_results);
-
-
 
 //buildResults() !!
 
