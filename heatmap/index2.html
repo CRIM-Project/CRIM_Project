@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Temporary Page for Heat Map Visualization</title>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+   <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+   <!-- Latest compiled JavaScript -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <!--script data-main="script.js" src="require.js"></script-->
+   <script src="script.js"></script>
+
+   <script src="timelines-chart.min.js"></script>
+   <!--script src="//unpkg.com/timelines-chart"></script-->
+
+
+
+</head>
+
+
+<body>
+ <div class="container-fluid">
+   <div class="page-header">
+	<h1>Temporary Page for Heat Map Visualization</h1>
+   </div>
+
+   <div class="row">
+	<div class="col-md-1"></div>
+	<div class="col-md-10" id="myPlot">
+          <!--div class="input-group" style="width:inherit">
+	    <label for="score_title">Search for score title:</label>
+            <input type="text" class="form-control" id="score_title">
+	    <span class="input-group-btn">
+        	<button class="btn btn-secondary" type="button" onclick="search()">Search</button>
+            </span>
+	  </div-->
+
+	  <!--div class="results">
+	    <ul id="myList">
+	    </ul>
+	  </div-->
+    <!--div id="myPlot"></div>
+    </div-->
+	<div class="col-md-1"></div>
+ </div>
+
+ <script type="text/javascript">
+  // var jsonfile;
+  // $.getJSON('ema.json').done(function (data) {
+  //   jsonfile = data;
+  // });
+
+
+function search(){
+	  var title = document.getElementById("score_title").value ;
+	  var fromsongs = jsonfile[title];
+
+	}
+  $( document ).ready(function() {
+    var jsonfile;
+    $.getJSON('user_timeline.json').done(function (data) {
+      jsonfile = data;
+
+
+    TimelinesChart()
+			.data(genData(jsonfile, "user_",  "Song_A"))
+			.zQualitative(true)
+      .timeFormat("%y")
+			(document.getElementById('myPlot'));
+        });
+  });
+
+
+
+   </script>
+</body>
+
+</html>
