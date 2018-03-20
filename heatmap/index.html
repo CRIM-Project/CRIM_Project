@@ -39,7 +39,6 @@
             </span>
 	        </div>
 	  <br>
-    <div id="Description"> </div>
 
   </div>
 	<div class="col-md-1"></div>
@@ -68,15 +67,15 @@
   $("#score_title").ready(function() {
     $.getJSON('ema.json').done(function (data) {
       jsonfile = data;
-      //console.log("jsonfile1, ", jsonfile);
+      console.log("jsonfile1, ", jsonfile);
       runcodeafter();
     });
   });
 //jquery is done asynchronously so  jsonfile3 is called before the json actually loads!
 function runcodeafter(){
-  //console.log("jsonfile2, ", jsonfile);
+  console.log("jsonfile2, ", jsonfile);
 }
-//console.log("jsonfile3, ", jsonfile);
+console.log("jsonfile3, ", jsonfile);
 
 
 
@@ -84,11 +83,11 @@ function runcodeafter(){
 function buildResults(results){
   var title = document.getElementById("score_title").value;
   var fromsongs = results;
-  //console.log("from songs, ", fromsongs);
-  //console.log("results, ", results);
+  console.log("from songs, ", fromsongs);
+  console.log("results, ", results);
 
   var no_results = Object.keys(results).length;
-  //console.log("no. results",no_results);
+  console.log("no. results",no_results);
   /// Lets add a info about the query to the Description div ///
   var info = document.getElementById("Description");
   var content = "<h2>" + no_results + "Results for \" "+ title + "</h2>"
@@ -113,15 +112,15 @@ function buildResults(results){
 
 
 /// hold execution to build chart until something has been searched ///
-$.holdReady( true );
+//$.holdReady( true );
 /// function is called with button click///
 function search(){
 	  var title = document.getElementById("score_title").value ;
-    //console.log(title);
+    console.log(title);
 	 // var fromsongs = jsonfile[title];
 
     /// now that we have searched for something we can build the chart! ///
-  $.holdReady(false);
+//  $.holdReady(false);
 	}
 
 $( document ).ready(function() {
@@ -141,12 +140,12 @@ $( document ).ready(function() {
         });
     });
 
-<<<<<<< HEAD
+
+
       //var no_results = Object.keys(results).length;
       //console.log("no. results",no_results);
-=======
 
->>>>>>> 336f6b268e2b060a36b497c4dbc983c43c1ae1bb
+
 
 //buildResults() !!
 
