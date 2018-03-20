@@ -37,24 +37,22 @@ function findArray(value, obJ){
 
 
 
-function genData(data_json, group_label, var1){
+function genData(data_json, title, group_label, var1){
   //console.log("vv", JSON.stringify(jsonF));
-  console.log("got here");
-<<<<<<< HEAD
+  //console.log("got here");
   //console.log("title", title);
-=======
-//  console.log("title", title); returns undefined
->>>>>>> fbe2282eaa29951d40f51e884cca25219f9a1c3b
   var forVis =[];
   var x = 0;
-  for(var key in data_json){
+
+  //for(var key in data_json){
+    //console.log("key", key);
     var dataOut = {};
-    dataOut["group"] = group_label + key;
+    dataOut["group"] = group_label + title;
     dataOut["data"] = [];
     var dataLabels = [];
     var dataTypes = {};
 
-    var fromsongs = data_json[key];
+    var fromsongs = data_json[title];
 
     for(i = 0; i < fromsongs.length; i++){
       var the_song = fromsongs[i][var1];
@@ -95,7 +93,7 @@ function genData(data_json, group_label, var1){
     }
     x+=1;
     forVis.push(dataOut);
-  }
+  //}
   var strr = JSON.stringify(forVis, null, 2);
   //console.log(strr);
 
