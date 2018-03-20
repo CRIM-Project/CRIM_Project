@@ -97,11 +97,11 @@ function buildResults(results){
 
   /// lets put the results in a togglable list ///
   var ul = document.getElementById("Mylist");
-  for (var i = 1; i< no_results; i++) {
+  for (var i = 0; i< no_results; i++) {
     var li = document.createElement("li");
     var children = ul.children.length + 1;
     li.setAttribute("id", "result"+children);
-    li.appendChild(document.createTextNode(JSON.stringify(fromsongs[i])));
+    li.appendChild(document.createTextNode(i+1+": "+JSON.stringify(fromsongs[i])));
     ul.appendChild(li);
   }
 }
