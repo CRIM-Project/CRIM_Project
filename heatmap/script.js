@@ -40,7 +40,7 @@ function findArray(value, obJ){
 function genData(data_json, group_label, var1){
   //console.log("vv", JSON.stringify(jsonF));
   console.log("got here");
-  console.log("title", title);
+  //console.log("title", title);
   var forVis =[];
   var x = 0;
   for(var key in data_json){
