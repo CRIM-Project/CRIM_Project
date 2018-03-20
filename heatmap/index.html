@@ -46,6 +46,20 @@
 </div>
 
 
+<div class="container">
+  <h2>Results</h2>
+  <p>Click on the button to toggle between showing and hiding content.</p>
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Description">Collapsible Results</button>
+  <div id="Description" class="collapse results">
+    <ul id="Mylist">
+    </ul>
+  </div>
+</div>
+
+
+<div>
+  <p>test</p>
+</div>
 
  <script type="text/javascript">
 
@@ -68,6 +82,9 @@ console.log("jsonfile3, ", jsonfile);
 
 
 function buildResults(results){
+  var title = document.getElementById("score_title").value;
+  var fromsongs = results;
+  console.log("from songs, ", fromsongs);
   console.log("results, ", results);
 
   var no_results = Object.keys(results).length;
@@ -76,10 +93,9 @@ function buildResults(results){
   var info = document.getElementById("Description");
   var content = "<h2>" + no_results + "Results for \" "+ title + "</h2>"
   //JSON.stringify(jsonfile["Benedicta es"], null, 2) - does pretty print
-
   /// lets put the results in a togglable list ///
   var ul = document.getElementById("Mylist");
-  for (i = 0; i< no_results; i++) {
+  for (var i = 1; i< no_results; i++) {
     var li = document.createElement("li");
     var children = ul.children.length + 1;
     li.setAttribute("id", "result"+children);
@@ -103,36 +119,28 @@ function search(){
 
 $( document ).ready(function() {
     var jsonfile;
-    $.getJSON('user_timeline.json').done(function (data) {
+    $.getJSON('ema.json').done(function (data) {
       jsonfile = data;
+      var title = document.getElementById("score_title").value ;
 
-      buildResults(jsonfile);
+
+    buildResults(jsonfile[title]);
 
     TimelinesChart()
-			.data(genData(jsonfile, "user_",  "Song_A"))
-			.zQualitative(true)
+      .data(genData(jsonfile, "group_label",  "Song_From"))
+      .zQualitative(true)
       .timeFormat("%y")
-			(document.getElementById('myPlot'));
-      //var no_results = Object.keys(results).length;
-      //console.log("no. results",no_results);
+      (document.getElementById('myPlot'));
+        });
     });
-  });
 
+    
 
 //buildResults() !!
 
 </script>
 
-   <div class="container">
-     <h2>Results</h2>
-     <p>Click on the button to toggle between showing and hiding content.</p>
-     <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Collapsible Results</button>
-     <div id="demo" class="collapse results">
-       <ul id="myList">
 
-       </ul>
-     </div>
-   </div>
 
 
 
