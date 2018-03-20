@@ -35,6 +35,16 @@ function findArray(value, obJ){
   return results;
 }
 
+function get_relSongs(data_json, title, var1){
+  var relsongs = [];
+  for( var x in data_json[title]){
+    var the_song = data_json[title][x][var1];
+    if(relsongs.indexOf(the_song) == -1){
+      relsongs.push(the_song);
+    }
+  }
+  return relsongs;
+}
 
 
 function genData(data_json, title, group_label, var1){
@@ -44,41 +54,47 @@ function genData(data_json, title, group_label, var1){
   var forVis =[];
   var x = 0;
 
-  //for(var key in data_json){
-    //console.log("key", key);
+  var relSongs = get_relSongs(data_json, title, var1);
+  console.log(relSongs);
+
+  for(var x in relSongs){
+    var the_song = relSongs[x];
     var dataOut = {};
-    dataOut["group"] = group_label + title;
+    dataOut["group"] = group_label + the_song;
     dataOut["data"] = [];
     var dataLabels = [];
     var dataTypes = {};
 
     var fromsongs = data_json[title];
+    //console.log(fromsongs);
 
     for(i = 0; i < fromsongs.length; i++){
-      var the_song = fromsongs[i][var1];
-      //console.log(the_song,dataLabels );
+      var the_session = i;
+      var _song = fromsongs[i][var1];
+      //console.log("data labels", the_session,dataLabels );
       var typee = fromsongs[i].typee;
       var mea = createRange(fromsongs[i].measures);
-      if(dataLabels.indexOf(the_song) == -1){
+      if(dataLabels.indexOf(the_session) == -1){
         song_dict = {};
         song_dict_info = {};
 
-        song_dict["label"] = the_song;
+        song_dict["label"] = the_session;
 
         song_dict_info["val"] = typee;
         song_dict_info["timeRange"] = mea;
-        dataTypes[the_song] = [typee,mea];
+        dataTypes[the_session] = [typee,mea];
         //console.log(dataTypes);
 
         song_dict["data"] = [song_dict_info];
         dataOut["data"].push(song_dict);
-        dataLabels.push(the_song);
+        dataLabels.push(the_session);
+        //console.log(dataOut["data"]);
       } else{
         song_dict_info = {};
         song_dict_info["val"] = typee;
         song_dict_info["timeRange"] = mea;
 
-        var ind = (dataOut["data"]).map(function(o) { return o.label; }).indexOf(the_song);
+        var ind = (dataOut["data"]).map(function(o) { return o.label; }).indexOf(the_session);
         if(ind != -1){
           //console.log(dataTypes[the_song][0], dataTypes[the_song][1])
           //if(dataTypes[the_song][0] == typee && arraysEqual(dataTypes[the_song][1], mea) == true){
@@ -93,13 +109,80 @@ function genData(data_json, title, group_label, var1){
     }
     x+=1;
     forVis.push(dataOut);
-  //}
+  }
   var strr = JSON.stringify(forVis, null, 2);
   //console.log(strr);
 
   return forVis;
 }
 
+
+// function genData(data_json, title, group_label, var1){
+//   //console.log("vv", JSON.stringify(jsonF));
+//   //console.log("got here");
+//   //console.log("title", title);
+//   var forVis =[];
+//   var x = 0;
+//
+//   var relSongs = get_relSongs(data_json, title, var1);
+//   //console.log(relSongs);
+//
+//   //for(var the_song in relSongs){
+//     //console.log("key", key);
+//     var dataOut = {};
+//     dataOut["group"] = group_label + the_song;
+//     dataOut["data"] = [];
+//     var dataLabels = [];
+//     var dataTypes = {};
+//
+//     var fromsongs = data_json[title];
+//     console.log(fromsongs);
+//
+//     for(i = 0; i < fromsongs.length; i++){
+//       var the_song = fromsongs[i][var1];
+//       //console.log(the_song,dataLabels );
+//       var typee = fromsongs[i].typee;
+//       var mea = createRange(fromsongs[i].measures);
+//       if(dataLabels.indexOf(the_song) == -1){
+//         song_dict = {};
+//         song_dict_info = {};
+//
+//         song_dict["label"] = the_song;
+//
+//         song_dict_info["val"] = typee;
+//         song_dict_info["timeRange"] = mea;
+//         dataTypes[the_song] = [typee,mea];
+//         //console.log(dataTypes);
+//
+//         song_dict["data"] = [song_dict_info];
+//         dataOut["data"].push(song_dict);
+//         dataLabels.push(the_song);
+//       } else{
+//         song_dict_info = {};
+//         song_dict_info["val"] = typee;
+//         song_dict_info["timeRange"] = mea;
+//
+//         var ind = (dataOut["data"]).map(function(o) { return o.label; }).indexOf(the_song);
+//         if(ind != -1){
+//           //console.log(dataTypes[the_song][0], dataTypes[the_song][1])
+//           //if(dataTypes[the_song][0] == typee && arraysEqual(dataTypes[the_song][1], mea) == true){
+//             //console.log("duplicate entry");
+//           //} else{
+//             dataOut["data"][ind]["data"].push(song_dict_info);
+//           //}
+//         } else{
+//           console.log("not in list of dict");
+//         }
+//       }
+//     }
+//     x+=1;
+//     forVis.push(dataOut);
+//   //}
+//   var strr = JSON.stringify(forVis, null, 2);
+//   //console.log(strr);
+//
+//   return forVis;
+// }
 
 // function genData_org(){
 //   //console.log("vv", JSON.stringify(jsonF));
