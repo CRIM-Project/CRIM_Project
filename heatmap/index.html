@@ -30,7 +30,7 @@
 
 <div class="row">
 	<div class="col-md-1"></div>
-	<div class="col-md-10" id="myPlot">
+	<div class="col-md-10" >
           <div class="input-group" style="width:inherit">
 	    <label for="score_title">Search for score title:</label>
             <input type="text" class="form-control" id="score_title">
@@ -38,10 +38,12 @@
         	<button class="btn btn-secondary" type="button" onclick="search()">Search</button>
             </span>
 	        </div>
-	  <br>
-
+          <br>
   </div>
-	<div class="col-md-1"></div>
+
+  <div class="col-md-10" id="myPlot"></div>
+
+  <div class="col-md-1"></div>
 </div>
 
 
@@ -114,37 +116,37 @@ function buildResults(results){
 /// hold execution to build chart until something has been searched ///
 //$.holdReady( true );
 /// function is called with button click///
+
+function clearResults(){
+  document.getElementById('myPlot').innerHTML = '';
+  document.getElementById('Mylist').innerHTML = '';
+}
+
 function search(){
+    clearResults();
 	  var title = document.getElementById("score_title").value ;
     console.log(title);
 	 // var fromsongs = jsonfile[title];
 
     /// now that we have searched for something we can build the chart! ///
 //  $.holdReady(false);
-	}
-
-$( document ).ready(function() {
+//$( document ).ready(function() {
     var jsonfile;
     $.getJSON('ema.json').done(function (data) {
       jsonfile = data;
       var title = document.getElementById("score_title").value ;
 
-
     buildResults(jsonfile[title]);
-
     TimelinesChart()
       .data(genData(jsonfile,title, "group_label",  "Song_From"))
       .zQualitative(true)
       .timeFormat("%y")
       (document.getElementById('myPlot'));
         });
-    });
 
+    //});
 
-
-      //var no_results = Object.keys(results).length;
-      //console.log("no. results",no_results);
-
+}
 
 
 //buildResults() !!
