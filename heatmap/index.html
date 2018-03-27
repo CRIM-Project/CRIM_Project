@@ -88,8 +88,8 @@ function runcodeafter(){
 function buildResults(results){
   var title = document.getElementById("score_title").value;
   var fromsongs = results;
-  //console.log("from songs, ", fromsongs);
-  //console.log("results, ", results);
+  console.log("from songs, ", fromsongs);
+  console.log("results, ", results);
 
   var no_results = Object.keys(results).length;
   //console.log("no. results",no_results);
@@ -162,13 +162,13 @@ function search(){
 //  $.holdReady(false);
 //$( document ).ready(function() {
     var jsonfile;
-    $.getJSON('ema_2.json').done(function (data) {
+    $.getJSON('user_timeline.json').done(function (data) {
       jsonfile = data;
       var title = document.getElementById("score_title").value ;
 
     buildResults(jsonfile[title]);
     TimelinesChart()
-      .data(genData(jsonfile,title, "group_label",  "Song_From"))
+      .data(genData(jsonfile, title,  "Song_B", "Song_A"))
       .zQualitative(true)
       .timeFormat('%Q')
       .xTickFormat(n => +n)
