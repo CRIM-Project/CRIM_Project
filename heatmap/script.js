@@ -55,7 +55,7 @@ function genData(data_json, title, group_label, var1){
   var x = 0;
 
   var relSongs = get_relSongs(data_json, title, var1);
-  console.log(relSongs);
+  //console.log(relSongs);
 
   for(var x in relSongs){
     var the_song = relSongs[x];
@@ -69,11 +69,24 @@ function genData(data_json, title, group_label, var1){
     //console.log(fromsongs);
 
     for(i = 0; i < fromsongs.length; i++){
+      var mea;
       var the_session = i;
       var _song = fromsongs[i][var1];
       //console.log("data labels", the_session,dataLabels );
       var typee = fromsongs[i].typee;
-      var mea = createRange(fromsongs[i].measures);
+      //var mea = createRange(fromsongs[i].measures);
+      var meaNum = (fromsongs[i].measures).split(",")
+      //console.log("meaNum: ", meaNum);
+      var _rmeaNum = meaNum[0].split("-")
+      //console.log("_rmeaNum: ", _rmeaNum);
+      if(_rmeaNum.length == 1){
+        mea = [parseInt(_rmeaNum[0]),parseInt(_rmeaNum[0])]
+      } else{
+        mea = [parseInt(_rmeaNum[0]),parseInt(_rmeaNum[1])]
+      }
+
+      //console.log("the original measure numbers: ", fromsongs[i].measures, "the new mea: ", mea);
+
       if(dataLabels.indexOf(the_session) == -1){
         song_dict = {};
         song_dict_info = {};
@@ -89,6 +102,7 @@ function genData(data_json, title, group_label, var1){
         dataOut["data"].push(song_dict);
         dataLabels.push(the_session);
         //console.log(dataOut["data"]);
+        //Sermisy, Claudin de : Sermisy. Missa Tota pulchra es (Credo)
       } else{
         song_dict_info = {};
         song_dict_info["val"] = typee;
@@ -111,7 +125,7 @@ function genData(data_json, title, group_label, var1){
     forVis.push(dataOut);
   }
   var strr = JSON.stringify(forVis, null, 2);
-  //console.log(strr);
+  console.log("The data :" , strr);
 
   return forVis;
 }

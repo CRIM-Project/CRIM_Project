@@ -72,15 +72,15 @@
   $("#score_title").ready(function() {
     $.getJSON('ema.json').done(function (data) {
       jsonfile = data;
-      console.log("jsonfile1, ", jsonfile);
+      //console.log("jsonfile1, ", jsonfile);
       runcodeafter();
     });
   });
 //jquery is done asynchronously so  jsonfile3 is called before the json actually loads!
 function runcodeafter(){
-  console.log("jsonfile2, ", jsonfile);
+  //console.log("jsonfile2, ", jsonfile);
 }
-console.log("jsonfile3, ", jsonfile);
+//console.log("jsonfile3, ", jsonfile);
 
 
 
@@ -88,11 +88,11 @@ console.log("jsonfile3, ", jsonfile);
 function buildResults(results){
   var title = document.getElementById("score_title").value;
   var fromsongs = results;
-  console.log("from songs, ", fromsongs);
-  console.log("results, ", results);
+  //console.log("from songs, ", fromsongs);
+  //console.log("results, ", results);
 
   var no_results = Object.keys(results).length;
-  console.log("no. results",no_results);
+  //console.log("no. results",no_results);
   /// Lets add a info about the query to the Description div ///
   var info = document.getElementById("Description");
   var content = "<h2>" + no_results + "Results for \" "+ title + "</h2>"
@@ -156,7 +156,7 @@ function search(){
       clearResults();
     }
 
-    console.log(title);
+    //console.log(title);
 	 // var fromsongs = jsonfile[title];
     /// now that we have searched for something we can build the chart! ///
 //  $.holdReady(false);
@@ -170,9 +170,12 @@ function search(){
     TimelinesChart()
       .data(genData(jsonfile,title, "group_label",  "Song_From"))
       .zQualitative(true)
-      .timeFormat("%y")
+      .timeFormat('%Q')
+      .xTickFormat(n => +n)
       (document.getElementById('myPlot'));
         });
+
+
 
     //});
 
