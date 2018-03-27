@@ -70,7 +70,7 @@ function genData(data_json, title, group_label, var1){
 
     for(i = 0; i < fromsongs.length; i++){
       var mea;
-      var the_session = i;
+      var the_session = fromsongs[i].record_id;
       var _song = fromsongs[i][var1];
       //console.log("data labels", the_session,dataLabels );
       var typee = fromsongs[i].typee;
@@ -101,14 +101,16 @@ function genData(data_json, title, group_label, var1){
         song_dict["data"] = [song_dict_info];
         dataOut["data"].push(song_dict);
         dataLabels.push(the_session);
+        console.log(dataLabels);
         //console.log(dataOut["data"]);
         //Sermisy, Claudin de : Sermisy. Missa Tota pulchra es (Credo)
       } else{
         song_dict_info = {};
         song_dict_info["val"] = typee;
         song_dict_info["timeRange"] = mea;
-
+        //console.log("here");
         var ind = (dataOut["data"]).map(function(o) { return o.label; }).indexOf(the_session);
+        console.log("the ind: ", ind);
         if(ind != -1){
           //console.log(dataTypes[the_song][0], dataTypes[the_song][1])
           //if(dataTypes[the_song][0] == typee && arraysEqual(dataTypes[the_song][1], mea) == true){
@@ -125,7 +127,7 @@ function genData(data_json, title, group_label, var1){
     forVis.push(dataOut);
   }
   var strr = JSON.stringify(forVis, null, 2);
-  console.log("The data :" , strr);
+  //console.log("The data :" , strr);
 
   return forVis;
 }
