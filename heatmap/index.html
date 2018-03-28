@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>Temporary Page for Heat Map Visualization</title>
 
@@ -17,21 +17,24 @@
    <script src="timelines-chart.min.js"></script>
    <!--script src="//unpkg.com/timelines-chart"></script-->
 
-
+   <!-- custom css -->
+   <link href="style.css" rel="stylesheet">
 
 </head>
 
 
 <body>
- <div class="container-fluid">
+
+ <main role="main" class="container">
    <div class="page-header">
-	<h1>Temporary Page for Heat Map Visualization</h1>
+<br>
+  <h1>Temporary Page for Heat Map Visualization</h1>
   <br>
    </div>
 
 <div class="row">
 	<div class="col-md-1"></div>
-	<div class="col-md-10" >
+	<div class="col-md-8" >
           <div class="input-group" style="width:inherit">
 	    <label for="score_title">Search for score title:</label>
             <input type="text" class="form-control" id="score_title">
@@ -48,20 +51,23 @@
 </div>
 
 
-<div class="container-fluid" id="searchResults" style='display:none'>
+<div class="container" id="searchResults" style='display:none'>
   <h2>Results</h2>
-  <p>Click on the button to toggle between showing and hiding content.</p>
+  <p>Click on the button to toggle between showing and hiding content displayed in the visualization above.</p>
   <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Description" aria-expanded="false" aria-controls="Description">Collapsible Results</button>
+  <br>
   <div class="collapse" id="Description">
     <div id='myTable'> </div>
 
     </div>
 </div>
 
-
-<div>
-  <p>footer</p>
-</div>
+</main>
+<footer class="footer">
+      <div class="container">
+        <span class="text-muted">Supported by <a href="https://www.haverford.edu/library/digital-scholarship"> Haverford Digital Scholarship</a> for the <a href="https://sites.google.com/a/haverford.edu/crim-project/"> CRIM project</a></span>
+      </div>
+    </footer>
 
  <script type="text/javascript">
 
@@ -71,7 +77,7 @@
     $.getJSON('ema.json').done(function (data) {
       jsonfile = data;
       //console.log("jsonfile1, ", jsonfile);
-      runcodeafter();
+    //  runcodeafter();
     });
   });
 /* //jquery is done asynchronously so  jsonfile3 is called before the json actually loads!
@@ -118,12 +124,6 @@ function buildResults(results){
 */
 
 
-
-
-/// hold execution to build chart until something has been searched ///
-//$.holdReady( true );
-/// function is called with button click///
-
 function clearResults(){
   // removes the previous results -- if they exist
   // and shows the Collapsible results div
@@ -156,19 +156,9 @@ function search(){
       .xTickFormat(n => +n)
       (document.getElementById('myPlot'));
         });
-
-
-
-    //});
-
 }
 
-
-//buildResults() !!
-
 </script>
-
-
 
 
 
