@@ -150,7 +150,7 @@ function search(){
 
     buildResults(jsonfile[title]);
     TimelinesChart()
-      .data(genData(jsonfile, title,  "Song_B", "Song_A"))
+      .data(genData(jsonfile, title,  "Song_From", "record_id"))
       .zQualitative(true)
       .timeFormat('%Q')
       .xTickFormat(n => +n)
