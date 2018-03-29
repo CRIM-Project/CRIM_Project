@@ -1,36 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>Temporary Page for Heat Map Visualization</title>
 
   <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" >
 
    <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
    <!-- Latest compiled JavaScript -->
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.bundle.min.js"></script>
    <!--script data-main="script.js" src="require.js"></script-->
    <script src="script.js"></script>
 
    <script src="timelines-chart.min.js"></script>
    <!--script src="//unpkg.com/timelines-chart"></script-->
 
-
+   <!-- custom css -->
+   <link href="style.css" rel="stylesheet">
 
 </head>
 
 
 <body>
- <div class="container-fluid">
+
+ <main role="main" class="container">
    <div class="page-header">
-	<h1>Temporary Page for Heat Map Visualization</h1>
+<br>
+  <h1>Temporary Page for Heat Map Visualization</h1>
+  <br>
    </div>
 
 <div class="row">
 	<div class="col-md-1"></div>
-	<div class="col-md-10" >
+	<div class="col-md-8" >
           <div class="input-group" style="width:inherit">
 	    <label for="score_title">Search for score title:</label>
             <input type="text" class="form-control" id="score_title">
@@ -49,21 +53,21 @@
 
 <div class="container" id="searchResults" style='display:none'>
   <h2>Results</h2>
-  <p>Click on the button to toggle between showing and hiding content.</p>
-  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Description">Collapsible Results</button>
-  <div id="Description" class="collapse results">
-    <ul id="Mylist">
-    </ul>
+  <p>Click on the button to toggle between showing and hiding content displayed in the visualization above.</p>
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Description" aria-expanded="false" aria-controls="Description">Collapsible Results</button>
+  <br>
+  <div class="collapse" id="Description">
+    <div id='myTable'> </div>
 
-    <div id='myTable'></div>
-
-  </div>
+    </div>
 </div>
 
-
-<div>
-  <p>footer</p>
-</div>
+</main>
+<footer class="footer">
+      <div class="container">
+        <span class="text-muted">Supported by <a href="https://www.haverford.edu/library/digital-scholarship"> Haverford Digital Scholarship</a> for the <a href="https://sites.google.com/a/haverford.edu/crim-project/"> CRIM project</a></span>
+      </div>
+    </footer>
 
  <script type="text/javascript">
 
@@ -73,16 +77,31 @@
     $.getJSON('ema.json').done(function (data) {
       jsonfile = data;
       //console.log("jsonfile1, ", jsonfile);
-      runcodeafter();
+    //  runcodeafter();
     });
   });
-//jquery is done asynchronously so  jsonfile3 is called before the json actually loads!
-function runcodeafter(){
-  //console.log("jsonfile2, ", jsonfile);
+/* //jquery is done asynchronously so  jsonfile3 is called before the json actually loads!
+  console.log("jsonfile2, ", jsonfile);
 }
-//console.log("jsonfile3, ", jsonfile);
+console.log("jsonfile3, ", jsonfile);
+*/
 
-
+$.makeTable = function (mydata) {
+    var table = $("<table class='table table-hover table-bordered'>");
+    var tblHeader = "<tr> <th scope='col'> No. </th>";
+    for (var k in mydata[0]) tblHeader += "<th scope='col'>" + k + "</th>";
+    tblHeader += "</tr>";
+    $(tblHeader).appendTo(table);
+    $.each(mydata, function (index, value) {
+        var TableRow = "<tr> <td scope='row'>" + index + "</td>";
+        $.each(value, function (key, val) {
+            TableRow += "<td>" + val + "</td>";
+        });
+        TableRow += "</tr>";
+        $(table).append(TableRow);
+    });
+    return ($(table));
+};
 
 
 function buildResults(results){
@@ -91,40 +110,9 @@ function buildResults(results){
   console.log("from songs, ", fromsongs);
   console.log("results, ", results);
 
-  var no_results = Object.keys(results).length;
-  //console.log("no. results",no_results);
-  /// Lets add a info about the query to the Description div ///
-  var info = document.getElementById("Description");
-  var content = "<h2>" + no_results + "Results for \" "+ title + "</h2>"
-  //JSON.stringify(jsonfile["Benedicta es"], null, 2) - does pretty print
-  /// lets put the results in a togglable list ///
-  var ul = document.getElementById("Mylist");
-  for (var i = 0; i< no_results; i++) {
-    var li = document.createElement("li");
-    var children = ul.children.length + 1;
-    li.setAttribute("id", "result"+children);
-    li.appendChild(document.createTextNode(i+1+": "+JSON.stringify(fromsongs[i])));
-    ul.appendChild(li);
-  }
-/*
-  var tableAttr = Object.keys(results[1]);
-  tableAttr.unshift("No.");
-
-  var tbl=$("<table/>").attr("id","resultsTable");
-  $("#myTable").append(tbl);
-  for(var i = 0; i< no_results; i++)
-  {
-      for(var x =0; x < tableAttr.length; x ++ ) {
-      var tr="<tr>";
-      var td1="<td>"+fromsongs[i]["id"]+"</td>";
-      var td2="<td>"+fromsongs[i]["name"]+"</td>";
-      var td3="<td>"+fromsongs[i]["color"]+"</td></tr>";
-
-     $("#resultsTable").append(tr+td1+td2+td3);
-   }
-
-  }
-  */
+  var mydata = eval(results);
+  var table = $.makeTable(mydata);
+  $(table).appendTo("#myTable");
 
 }
 
@@ -136,17 +124,11 @@ function buildResults(results){
 */
 
 
-
-
-/// hold execution to build chart until something has been searched ///
-//$.holdReady( true );
-/// function is called with button click///
-
 function clearResults(){
   // removes the previous results -- if they exist
   // and shows the Collapsible results div
   document.getElementById('myPlot').innerHTML = '';
-  document.getElementById('Mylist').innerHTML = '';
+  document.getElementById('myTable').innerHTML = '';
   document.getElementById('searchResults').style.display = 'block';
 }
 
@@ -162,7 +144,7 @@ function search(){
 //  $.holdReady(false);
 //$( document ).ready(function() {
     var jsonfile;
-    $.getJSON('ema_2.json').done(function (data) {
+    $.getJSON('ema.json').done(function (data) {
       jsonfile = data;
       var title = document.getElementById("score_title").value ;
 
@@ -174,19 +156,9 @@ function search(){
       .xTickFormat(n => +n)
       (document.getElementById('myPlot'));
         });
-
-
-
-    //});
-
 }
 
-
-//buildResults() !!
-
 </script>
-
-
 
 
 

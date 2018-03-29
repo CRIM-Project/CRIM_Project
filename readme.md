@@ -119,6 +119,16 @@ In this example we are searching for the score titled, "Lassus, Roland de : Lass
 
 it generates information for that specific score from the ema.json file, which is a json that contains all the scores in the CRIM API, where each score has information about what other musical piece each of its measure stems from. The information that is returned as an output from the search is a list of the names of the different musical piece influences that is in this score as well as what measure(s) each of these musical influences can be found in the score. Note that the list is made up of the names of scores that are also from the CRIM API.
 
+####### searches available
+song_b && song_a == song_from 
+
+- query: user_id -  yaxis: song_b zaxis: song_a  ( note these could be flipped ) 
+- query: title - yaxis: song_from zaxis: record_id 
+the following two dont work bc the user.json doesnt have song_from attr 
+- query: title - yaxis: song_from  zaxis: song_a
+- query: title - yaxis: song_from  zaxis: song_b
+
+
 ###### Example output of search:
 ![Example output of search]( readme_images/temp_html_output.png "In this example output...")
 
@@ -137,11 +147,12 @@ We are in the process of starting a website to better collect all of our work on
 ###### To do list
 - [ ] Have view with users, scores and music|relationships types as the color
 - [ ] Have relationship types ( y-axis ), scores, music types as color
-- [ ] fix measures axis line up
-- [ ] view heatmap for one score at a time
+- [x] fix measures axis line up
+- [x] view heatmap for one score at a time
 - [ ] look into actual heatmap opacity functionality
 - [ ] look into being able to toggle between different types of axis
 - [ ] make scripts to generate the jsons that the above visualizations will require
+- [ ]optimize the table
 
 
 
