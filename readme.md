@@ -107,7 +107,7 @@ c140,1
 Currently we are working on two visualizations.
 	One is a a modified chord diagram to visualize the relationship between musical types and relationship types. This was largely inspired by visualcinnamon's blog [post](https://www.visualcinnamon.com/2015/08/stretched-chord.html). This visualization is in the `matrix/` directory.
 
-##### Heat Map Visualization
+### Heat Map Visualization
 Our other visualization is a heat map visualization that can be accessed in the file heatmap/index.html. 
 
 ###### Example output of search:
@@ -117,12 +117,12 @@ Our other visualization is a heat map visualization that can be accessed in the 
 > This example output shows a list of the names of the different musical piece influences in the Lassus, Roland de : Lassus. Susanne un jour piece and the measure(s) where they can each be found.
 
 
-##### Next steps
+#### Next steps
 We are in the process of fine-tuning a parallel timelines layout (swimlanes) for representing state of time-series over time. This time-line would display the measures in a score along the x-axis and show how other attributes interact with that one score. The code for this is cloned from [vasturiano's repo](https://github.com/vasturiano/timelines-chart). We have the capability to search with different attributes for the the z-axis and y-axis and are now working on incorporating this functionality in the browser.
 
 Richard has suggested that " we could have the 'groups' assigned to each Work_ID, then the 'labels' could be the individual Analyst_IDs (that is, the folks who made observations about each piece).  Colors could map to musical types or relationship types (two different views, I suppose).  Tooltip could reveal basic information about the item, plus a URL link to the music.  The timeline at the bottom could be from the start to the end of each piece".
 
-###### searches available
+##### searches available
 song_b && song_a == song_from 
 
 - query: user_id -  yaxis: song_b zaxis: song_a  ( note these could be flipped ) 
@@ -132,10 +132,10 @@ the following two dont work bc the user.json doesnt have song_from attr
 - query: title - yaxis: song_from  zaxis: song_b
 
 
-###### Droplet
+### Droplet
 We are in the process of starting a website to better collect all of our work on this Droplet: http://159.65.177.99/
 
-###### To do list
+## To do list
 - [ ] Have a view with users, scores and (music|relationships) types as the color
 - [ ] Have a view relationship types ( y-axis ), scores, music types as color
 - [x] fix measures axis line up
