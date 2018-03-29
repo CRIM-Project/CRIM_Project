@@ -43,10 +43,10 @@
           <div class="input-group-prepend">
             <label class="input-group-text" for="inputGroupSelect01">Search by:</label>
           </div>
-          <select class="custom-select" id="inputGroupSelect01">
-            <option selected>Choose...</option>
-            <option value="1">Score Title</option>
-            <option value="2">User ID</option>
+          <select id="selector" class="custom-select" onchange="test();" id="inputGroupSelect01">
+            <option value="0" selected >Choose...</option>
+            <option value="1" >Score Title</option>
+            <option value="2" >User ID</option>
           </select>
         </div>
       </div>
@@ -67,7 +67,7 @@
         </form>
   </div>
   <div class="col-md-1">
-    <button type="button" class="btn btn-secondary" data-toggle="tooltip" onmouseover="test()" data-placement="bottom" title="Tooltip on left">
+    <button type="button" class="btn btn-secondary" data-toggle="tooltip"  id="help" data-placement="bottom" title="Tooltip on left">
   ?
 </button>
   </div>
@@ -101,8 +101,15 @@
  <script type="text/javascript">
 
  function test(){
-   console.log("testing");
-   // here is where we will edit the tooltip ! 
+   var e = document.getElementById("selector");
+   var value = e.options[e.selectedIndex].value;
+   var text = e.options[e.selectedIndex].text;
+   console.log(value,text,"has been selected");
+   // if value === "1" then the text will be about the Song view
+   // if value === "2" then the text will be about the User view
+   // if value === "0" then the text will be even more thorough bc they are still on "choose ..."
+   document.getElementById('help').setAttribute('data-original-title',text);
+   // here is where we will edit the tooltip !
  }
 
  $(function () {
