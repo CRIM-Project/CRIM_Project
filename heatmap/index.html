@@ -67,7 +67,7 @@
         </form>
   </div>
   <div class="col-md-1">
-    <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Tooltip on left">
+    <button type="button" class="btn btn-secondary" data-toggle="tooltip" onmouseover="test()" data-placement="bottom" title="Tooltip on left">
   ?
 </button>
   </div>
@@ -99,6 +99,11 @@
     </footer>
 
  <script type="text/javascript">
+
+ function test(){
+   console.log("testing");
+   // here is where we will edit the tooltip ! 
+ }
 
  $(function () {
    $('[data-toggle="tooltip"]').tooltip()
