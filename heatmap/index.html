@@ -34,7 +34,7 @@
 
 <div class="row">
 	<div class="col-md-1"></div>
-	<div class="col-md-8" >
+	<div class="col-md-10" >
           <div class="input-group" style="width:inherit">
 	    <label for="score_title">Search for score title:</label>
             <input type="text" class="form-control" id="score_title">
@@ -44,7 +44,10 @@
 	        </div>
           <br>
   </div>
-
+  <div class="col-md-1"></div>
+</div>
+<div class="row">
+  <div class="col-md-1"></div>
   <div class="col-md-10" id="myPlot"></div>
 
   <div class="col-md-1"></div>
@@ -144,7 +147,7 @@ function search(){
 //  $.holdReady(false);
 //$( document ).ready(function() {
     var jsonfile;
-    $.getJSON('ema.json').done(function (data) {
+    $.getJSON('ema_2.json').done(function (data) {
       jsonfile = data;
       var title = document.getElementById("score_title").value ;
 
