@@ -162,13 +162,13 @@ function search(){
 //  $.holdReady(false);
 //$( document ).ready(function() {
     var jsonfile;
-    $.getJSON('user_timeline.json').done(function (data) {
+    $.getJSON('ema_2.json').done(function (data) {
       jsonfile = data;
       var title = document.getElementById("score_title").value ;
 
     buildResults(jsonfile[title]);
     TimelinesChart()
-      .data(genData(jsonfile, title,  "Song_B", "Song_A"))
+      .data(genData(jsonfile, title,  "Song_From", "record_id"))
       .zQualitative(true)
       .timeFormat('%Q')
       .xTickFormat(n => +n)
