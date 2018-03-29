@@ -134,6 +134,8 @@ the following two dont work bc the user.json doesnt have song_from attr
 
 ### Droplet
 We are in the process of starting a website to better collect all of our work on this Droplet: http://159.65.177.99/
+**_Check out the dev-version of our visualization here:_** http://159.65.177.99/CRIM_Project/heatmap/index.html
+
 
 ## To do list
 - [ ] Have a view with users, scores and (music|relationships) types as the color
