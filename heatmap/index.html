@@ -36,7 +36,9 @@
 	<div class="col-md-1"></div>
 	<div class="col-md-10" >
     <form class="form-inline" id="search_form">
-<span class="input-group-append" id="search_form">
+      <span class="input-group-append" id="search_form">
+        <div class="form-row">
+          <div class="col-sm-4">
         <div class="input-group mb-3" id="select-form">
           <div class="input-group-prepend">
             <label class="input-group-text" for="inputGroupSelect01">Search by:</label>
@@ -47,7 +49,9 @@
             <option value="2">User ID</option>
           </select>
         </div>
+      </div>
 
+        <div class="col-sm-8">
           <div class="input-group mb-3" id="search_box">
 	    <!--label for="score_title">Search for score title:</label-->
 
@@ -57,10 +61,16 @@
         	<button class="btn btn-outline-secondary" type="button"  onclick="search()">Search</button>
             </span>
 	        </div>
+        </div>
+            </div>
           <br>
         </form>
   </div>
-  <div class="col-md-1"></div>
+  <div class="col-md-1">
+    <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Tooltip on left">
+  ?
+</button>
+  </div>
 </div>
 <div class="row">
   <div class="col-md-1"></div>
@@ -90,6 +100,9 @@
 
  <script type="text/javascript">
 
+ $(function () {
+   $('[data-toggle="tooltip"]').tooltip()
+ })
 
  var jsonfile = {};
   $("#score_title").ready(function() {
