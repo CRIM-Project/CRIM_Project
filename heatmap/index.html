@@ -54,11 +54,8 @@
         <div class="col-sm-8">
           <div class="input-group mb-3" id="search_box">
 	    <!--label for="score_title">Search for score title:</label-->
-
-
             <input type="text" class="form-control" id="score_title">
-
-        	<button class="btn btn-outline-secondary" type="button"  onclick="search()">Search</button>
+        	     <button class="btn btn-outline-secondary" type="button"  onclick="search()">Search</button>
             </span>
 	        </div>
         </div>
@@ -67,15 +64,13 @@
         </form>
   </div>
   <div class="col-md-1">
-    <button type="button" class="btn btn-secondary" data-toggle="tooltip"  id="help" data-placement="bottom" title="Tooltip on left">
-  ?
-</button>
+    <button type="button" class="btn btn-info"  id='help' data-placement="bottom" data-toggle="popover" title="Welcome!" data-content="Select a type of search by clicking 'Choose...' and selecting from the options">?</button>
+  <!--  <button type="button" class="btn btn-info" data-toggle="tooltip" id="help" data-placement="bottom" title="Tooltip on left"> ? </button>-->
   </div>
 </div>
 <div class="row">
   <div class="col-md-1"></div>
   <div class="col-md-10" id="myPlot"></div>
-
   <div class="col-md-1"></div>
 </div>
 
@@ -101,20 +96,42 @@
  <script type="text/javascript">
 
  function test(){
+    /////////////////////////////////////////////////////
+   /// here is where we will edit the help tooltip ! ///
+  /////////////////////////////////////////////////////
    var e = document.getElementById("selector");
    var value = e.options[e.selectedIndex].value;
    var text = e.options[e.selectedIndex].text;
    console.log(value,text,"has been selected");
-   // if value === "1" then the text will be about the Song view
-   // if value === "2" then the text will be about the User view
-   // if value === "0" then the text will be even more thorough bc they are still on "choose ..."
-   document.getElementById('help').setAttribute('data-original-title',text);
-   // here is where we will edit the tooltip !
- }
+   var helpText= 'Some Helpful info about this search will go here!';
+   if (value === "1") {  // if value === "1" then the text will be about the Song view
+     helpText = "This is the Search for a particular song - try 'Benedicta es'";
+     text += ' Search';
+   }
+   else if (value === "2") { // if value === "2" then the text will be about the User view
+     helpText = 'This is the Search for a particular user - try searching a number ...';
+     text += ' Search';
+   }
+   else { // if value === "0" then the text will be even more thorough bc they are still on "choose ..."
+     helpText = "Select a type of search by clicking 'Choose...' and selecting from the options";
+     text = 'Welcome!';
+   }
 
- $(function () {
-   $('[data-toggle="tooltip"]').tooltip()
+
+   document.getElementById('help').setAttribute('data-original-title',text);
+   document.getElementById('help').setAttribute('data-content',helpText);
+
+}
+
+
+ $('#help').popover({
+   trigger: 'focus'
  })
+
+
+// $(function () {
+//   $('[data-toggle="tooltip"]').tooltip()
+// })
 
  var jsonfile = {};
   $("#score_title").ready(function() {
@@ -203,9 +220,6 @@ function search(){
 }
 
 </script>
-
-
-
 </body>
 
 </html>
