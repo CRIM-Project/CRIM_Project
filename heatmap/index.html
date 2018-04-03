@@ -279,7 +279,7 @@ function search(){
       warning_div.append(y);
       (document.getElementById('myPlot')).appendChild(warning_div);
 
-    } else if(value === "1" && isNumeric(title) === true){ // error input has to be a score title
+    } else if(value === "1" && (isNumeric(title) === true || title.length === 0)){ // error input has to be a score title
 
         var y = document.createTextNode(" You have chosen to search by score title. Try input a valid score title (ex. 'Benedicta es').");
         warning_div.append(y);
@@ -290,7 +290,7 @@ function search(){
         var y = document.createTextNode(" " + title + " is not a valid score title.");
         warning_div.append(y);
         (document.getElementById('myPlot')).appendChild(warning_div);
-    } else if (value == "2" && isNumeric(title) === false) {
+    } else if (value == "2" && (isNumeric(title) === false || title.length === 0)) {
 
         var y = document.createTextNode(" You have chosen to search by user id. Try searching a number that represents a user id.");
         warning_div.append(y);
