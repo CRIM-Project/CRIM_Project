@@ -50,3 +50,14 @@ body {
 #search_box_div{
   width: inherit;
 }
+
+#searchResults {
+    padding-bottom: 20px;
+}
+
+
+#myTable {
+  padding: 20px 0px 20px 10px;
+  line-height: 1;
+  width:90%;
+}
