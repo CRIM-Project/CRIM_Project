@@ -95,6 +95,10 @@
 
  <script type="text/javascript">
 
+  var input_json = "ema_2.json";
+  var attr_y = "Song_From";
+  var attr_z = "record_id";
+
  function test(){
     /////////////////////////////////////////////////////
    /// here is where we will edit the help tooltip ! ///
@@ -107,10 +111,17 @@
    if (value === "1") {  // if value === "1" then the text will be about the Song view
      helpText = "This is the Search for a particular song - try 'Benedicta es'";
      text += ' Search';
+     input_json = 'ema_2.json';
+     attr_y = "Song_From";
+     attr_z = "record_id";
+
    }
    else if (value === "2") { // if value === "2" then the text will be about the User view
      helpText = 'This is the Search for a particular user - try searching a number ...';
      text += ' Search';
+     input_json = 'user_timeline.json';
+     attr_y = "Song_A";
+     attr_z = "Song_B";
    }
    else { // if value === "0" then the text will be even more thorough bc they are still on "choose ..."
      helpText = "Select a type of search by clicking 'Choose...' and selecting from the options";
@@ -193,30 +204,115 @@ function clearResults(){
   document.getElementById('searchResults').style.display = 'block';
 }
 
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+function getValidinput(input_json){
+    var validinput;
+    var jsonfile;
+
+    $.ajax({
+        url: input_json,
+        async: false,
+        dataType: 'json',
+        success: function(data) {
+            jsonfile = data;
+            //console.log("the json is ", jsonfile);
+            validinput = Object.keys(jsonfile);
+            //console.log("the val is: ", validinput);
+            //return validinput;
+          }
+  });
+  //console.log("the val is now: ", validinput);
+  return validinput;
+
+
+}
+
 function search(){
 	  var title = document.getElementById("score_title").value ;
     if (title !=''){
       clearResults();
     }
 
+
+
     //console.log(title);
 	 // var fromsongs = jsonfile[title];
     /// now that we have searched for something we can build the chart! ///
 //  $.holdReady(false);
 //$( document ).ready(function() {
+// var input_json = "ema_2.json";
+// var attr_y = "Song_From";
+// var attr_z = "record_id";
+
+
+  var validinput = getValidinput(input_json);
+  //console.log("return from new func ", validinput);
+
+  var e = document.getElementById("selector");
+  var value = e.options[e.selectedIndex].value;
+  var warning_mes = document.createElement('strong');
+  var x = document.createTextNode("Warning!");
+  warning_mes.appendChild(x);
+
+  var warning_div= document.createElement('div');
+  warning_div.classList.add("alert",  "alert-warning");
+  warning_div.appendChild(warning_mes);
+  if(value === "0"){
+    console.log("ERROR 1");
+
+    var y = document.createTextNode(" You have to choose what you want to search by clicking 'Choose...' and selecting from the 2 given options.");
+    warning_div.append(y);
+
+    (document.getElementById('myPlot')).appendChild(warning_div);
+
+  } else if(value === "1"){ // error input has to be a score title
+      console.log("ERROR 1");
+
+      if(isNumeric(title) === true){
+        var y = document.createTextNode(" You have chosen to search by score title. Try input a valid score title (ex. 'Benedicta es').");
+        //console.log(warning_div);
+        warning_div.append(y);
+
+      } else if (validinput.indexOf(title) == -1) {
+        var y = document.createTextNode(" " + title + " is not a valid score title.");
+        warning_div.append(y);
+      }
+      (document.getElementById('myPlot')).appendChild(warning_div);
+
+  } else if (value == "2") {
+
+      if(isNumeric(title) === false){
+        var y = document.createTextNode(" You have chosen to search by user id. Try searching a number that represents a user id.");
+        warning_div.append(y);
+      } else if (validinput.indexOf(title) == -1) {
+        //console.log("in here");
+        var y = document.createTextNode(" " + title + " is not a valid user id. Valid user ids are " + validinput.join(", "));
+        warning_div.append(y);
+      }
+
+    (document.getElementById('myPlot')).appendChild(warning_div);
+
+  }
+  else{
+
     var jsonfile;
-    $.getJSON('ema_2.json').done(function (data) {
+
+    $.getJSON(input_json).done(function (data) {
       jsonfile = data;
       var title = document.getElementById("score_title").value ;
 
     buildResults(jsonfile[title]);
     TimelinesChart()
-      .data(genData(jsonfile, title,  "Song_From", "record_id"))
+      .data(genData(jsonfile, title,  attr_y, attr_z))
       .zQualitative(true)
       .timeFormat('%Q')
       .xTickFormat(n => +n)
       (document.getElementById('myPlot'));
         });
+    }
 }
 
 </script>
