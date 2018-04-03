@@ -1,34 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Temporary Page for Heat Map Visualization</title>
+  <title>CRIM Heat Map Visualization</title>
 
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" >
-
    <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
    <!-- Latest compiled JavaScript -->
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.bundle.min.js"></script>
    <!--script data-main="script.js" src="require.js"></script-->
    <script src="script.js"></script>
-
    <script src="timelines-chart.min.js"></script>
    <!--script src="//unpkg.com/timelines-chart"></script-->
-
    <!-- custom css -->
    <link href="style.css" rel="stylesheet">
 
 </head>
-
 
 <body>
 
  <main role="main" class="container">
    <div class="page-header">
 <br>
-  <h1>Temporary Page for Heat Map Visualization</h1>
+  <h1>Heat Map Visualization</h1>
   <br>
    </div>
 
@@ -126,6 +121,7 @@
 
  $('#help').popover({
    trigger: 'focus'
+   // trigger focus on the #selector when still on "choose..."
  })
 
 
@@ -145,22 +141,37 @@
   console.log("jsonfile2, ", jsonfile);
 }
 console.log("jsonfile3, ", jsonfile);
+
+"rt-q": Quotation
+"rt-tm": Transformation (mechanical)
+"rt-tnm": Transformation (non mechanical)
+"rt-nm": New Material
+"rt-om": Omission
 */
 
 $.makeTable = function (mydata) {
+    var type_dict = {"rt-q": "Quotation", "rt-tm": "Transformation (mechanical)", "rt-tnm": "Transformation (non mechanical)","rt-nm": "New Material","rt-om": "Omission"}
     var table = $("<table class='table table-hover table-bordered'>");
-    var tblHeader = "<tr> <th scope='col'> No. </th>";
+    var tblHeader = "<thead><tr> <th scope='col'> No. </th>";
     for (var k in mydata[0]) tblHeader += "<th scope='col'>" + k + "</th>";
-    tblHeader += "</tr>";
+    tblHeader += "</tr></thead><tbody>";
     $(tblHeader).appendTo(table);
     $.each(mydata, function (index, value) {
         var TableRow = "<tr> <td scope='row'>" + index + "</td>";
         $.each(value, function (key, val) {
-            TableRow += "<td>" + val + "</td>";
+
+            //doing a quick dict replace to un-abreviate abreviation 
+            if (key === "typee"){
+              TableRow += "<td>" + type_dict[val] + "</td>";
+            }
+            else {
+              TableRow += "<td>" + val + "</td>";
+            }
         });
         TableRow += "</tr>";
         $(table).append(TableRow);
     });
+    var end = "</tbody></table>";
     return ($(table));
 };
 
