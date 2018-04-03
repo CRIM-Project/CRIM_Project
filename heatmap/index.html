@@ -171,7 +171,7 @@ $.makeTable = function (mydata) {
         var TableRow = "<tr> <td scope='row'>" + index + "</td>";
         $.each(value, function (key, val) {
 
-            //doing a quick dict replace to un-abreviate abreviation 
+            //doing a quick dict replace to un-abreviate abreviation
             if (key === "typee"){
               TableRow += "<td>" + type_dict[val] + "</td>";
             }
@@ -259,55 +259,49 @@ function search(){
 // var attr_z = "record_id";
 
 
-  var validinput = getValidinput(input_json);
-  //console.log("return from new func ", validinput);
+    var validinput = getValidinput(input_json);
+    //console.log("return from new func ", validinput);
 
-  var e = document.getElementById("selector");
-  var value = e.options[e.selectedIndex].value;
-  var warning_mes = document.createElement('strong');
-  var x = document.createTextNode("Warning!");
-  warning_mes.appendChild(x);
+    var e = document.getElementById("selector");
+    var value = e.options[e.selectedIndex].value;
+    var warning_mes = document.createElement('strong');
+    var x = document.createTextNode("Warning!");
+    warning_mes.appendChild(x);
 
-  var warning_div= document.createElement('div');
-  warning_div.classList.add("alert",  "alert-warning");
-  warning_div.appendChild(warning_mes);
-  if(value === "0"){
-    console.log("ERROR 1");
+    var warning_div= document.createElement('div');
+    warning_div.classList.add("alert",  "alert-warning");
+    warning_div.appendChild(warning_mes);
 
-    var y = document.createTextNode(" You have to choose what you want to search by clicking 'Choose...' and selecting from the 2 given options.");
-    warning_div.append(y);
-
-    (document.getElementById('myPlot')).appendChild(warning_div);
-
-  } else if(value === "1"){ // error input has to be a score title
+    if(value === "0"){
       console.log("ERROR 1");
 
-      if(isNumeric(title) === true){
-        var y = document.createTextNode(" You have chosen to search by score title. Try input a valid score title (ex. 'Benedicta es').");
-        //console.log(warning_div);
-        warning_div.append(y);
-
-      } else if (validinput.indexOf(title) == -1) {
-        var y = document.createTextNode(" " + title + " is not a valid score title.");
-        warning_div.append(y);
-      }
+      var y = document.createTextNode(" You have to choose what you want to search by clicking 'Choose...' and selecting from the 2 given options.");
+      warning_div.append(y);
       (document.getElementById('myPlot')).appendChild(warning_div);
 
-  } else if (value == "2") {
+    } else if(value === "1" && isNumeric(title) === true){ // error input has to be a score title
 
-      if(isNumeric(title) === false){
+        var y = document.createTextNode(" You have chosen to search by score title. Try input a valid score title (ex. 'Benedicta es').");
+        warning_div.append(y);
+        (document.getElementById('myPlot')).appendChild(warning_div);
+
+    } else if (value === "1" && validinput.indexOf(title) == -1) {
+        //console.log("ERROR 1.2");
+        var y = document.createTextNode(" " + title + " is not a valid score title.");
+        warning_div.append(y);
+        (document.getElementById('myPlot')).appendChild(warning_div);
+    } else if (value == "2" && isNumeric(title) === false) {
+
         var y = document.createTextNode(" You have chosen to search by user id. Try searching a number that represents a user id.");
         warning_div.append(y);
-      } else if (validinput.indexOf(title) == -1) {
-        //console.log("in here");
+        (document.getElementById('myPlot')).appendChild(warning_div);
+
+    } else if (value == "2" && validinput.indexOf(title) == -1) {
+        console.log("ERROR 2.2");
         var y = document.createTextNode(" " + title + " is not a valid user id. Valid user ids are " + validinput.join(", "));
         warning_div.append(y);
-      }
-
-    (document.getElementById('myPlot')).appendChild(warning_div);
-
-  }
-  else{
+        (document.getElementById('myPlot')).appendChild(warning_div);
+    } else{
 
     var jsonfile;
 
