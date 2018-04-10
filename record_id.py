@@ -27,7 +27,10 @@ def get_record_id(id, data):
 	for rel in data:
 		#print(rel["record_id"],id ,type(rel["record_id"]),type(id),rel["record_id"]==id )
 		if rel["record_id"] == id:
-			return rel
+			info = rel['text']
+			info2 = json.loads(info)
+			return info2
+			
 	return "record_id not found"
 
 	#pprint.pprint(user_title_viz)
@@ -38,6 +41,7 @@ def main(id):
 	crim.set_url(crim.CRIM_url)
 	data = crim.get_data()
 	result_id = get_record_id(id,data)
+
 
 
 	pprint.pprint(result_id)
