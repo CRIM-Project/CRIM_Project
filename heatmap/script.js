@@ -71,7 +71,7 @@ function genData(data_json, title, attr_y, attr_z){
     var dataLabels = [];
     var dataTypes = {};
 
-    
+
 
     var fromsongs = data_json[title];
     //console.log(fromsongs);
@@ -85,8 +85,11 @@ function genData(data_json, title, attr_y, attr_z){
       var typee = fromsongs[i].typee;
       //var mea = createRange(fromsongs[i].measures);
       var meaNum = (fromsongs[i].measures).split(",")
-      //console.log("meaNum: ", meaNum);
-      var _rmeaNum = meaNum[0].split("-")
+
+      for(x = 0; x < meaNum.length; x++) {
+
+      var _rmeaNum = meaNum[x].split("-")
+      console.log("meaNum: ", meaNum[x]);
       //console.log("_rmeaNum: ", _rmeaNum);
       if(_rmeaNum.length == 1){
         mea = [parseInt(_rmeaNum[0]),parseInt(_rmeaNum[0])]
@@ -131,7 +134,8 @@ function genData(data_json, title, attr_y, attr_z){
           //console.log("not in list of dict");
         }
       }
-    }
+    }// end meaNum.length for loop
+    } // end fromsongs.length for loop
     x+=1;
     forVis.push(dataOut);
   }
