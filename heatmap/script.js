@@ -71,6 +71,8 @@ function genData(data_json, title, attr_y, attr_z){
     var dataLabels = [];
     var dataTypes = {};
 
+    
+
     var fromsongs = data_json[title];
     //console.log(fromsongs);
 
