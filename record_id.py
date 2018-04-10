@@ -21,8 +21,6 @@ def get_key(dictt, keyy):
 
 
 
-
-<
 def basic_dict_csv(d,header,filename):
 	with open(filename, 'w') as f:
 		f.write(header+ ',counts\n')
@@ -41,7 +39,7 @@ def get_record_id(id, data):
 			return rel
 	return "record_id not found"
 
-	#pprint.pprint(user_title_viz)
+	pprint.pprint(user_title_viz)
 
 
 
