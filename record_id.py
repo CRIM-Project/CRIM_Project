@@ -22,6 +22,17 @@ def get_key(dictt, keyy):
 
 
 
+<
+def basic_dict_csv(d,header,filename):
+	with open(filename, 'w') as f:
+		f.write(header+ ',counts\n')
+		[f.write('{0},{1}\n'.format(key.replace(',', ''), value)) for key, value in d.items()]
+
+def to_json(d, filename):
+	with open(filename, 'w') as f:
+		json_str = json.dump(d, f, indent=4)
+
+
 def get_record_id(id, data):
 
 	for rel in data:
@@ -34,6 +45,7 @@ def get_record_id(id, data):
 	return "record_id not found"
 
 	#pprint.pprint(user_title_viz)
+
 
 
 def main(id):
