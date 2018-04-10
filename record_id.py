@@ -48,62 +48,14 @@ def get_catLabel(mea_num):
 
 
 
-def get_user_dict(data):
+def get_record_id(id, data):
 	user_title_viz = {}
 	user_lst = []
 
 
 	for rel in data:
 
-		info = rel["text"]
-		info2 = json.loads(info) # turns 'text' into usable dict
 
-		relation = info2['relationships'][0]
-		u_id = info2['user']
-		if info2['assertions'] != []:
-			assertion = info2['assertions'][0]
-		versions = info2['scores']
-
-		mea = (relation['scoreA_ema'].split('/')[0]).split(",")
-		# for x in versions:
-		# 	pprint.pprint(x)
-		# 	#title = x['title']
-
-		if u_id not in user_lst:
-			user_lst.append(u_id)
-			user_title_viz[u_id] = []
-			#print(mea)
-
-			if len(mea) == 1:
-				user_sub_dict = {'measures': mea[0] , 'Song_A': clean_title(relation['titleA']), 'Song_B': clean_title(relation['titleB']) }#, 'Direction': relation['direction'] }
-				#user_sub_dict['typee'] = get_key(relation, 'types')
-				user_sub_dict['typee'] = get_catLabel(mea[0])
-				user_title_viz[u_id] = [user_sub_dict]
-			else:
-				for m_num in mea:
-					user_sub_dict = {'measures': m_num , 'Song_A': clean_title(relation['titleA']), 'Song_B': clean_title(relation['titleB']) }#, 'Direction': relation['direction'] }
-					#user_sub_dict['typee'] = get_key(relation, 'types')
-					user_sub_dict['typee'] = get_catLabel(m_num)
-					user_title_viz[u_id] = [user_sub_dict]
-
-
-		else:
-			if len(mea) == 1:
-				user_sub_dict = {'measures': mea[0] , 'Song_A': clean_title(relation['titleA']), 'Song_B': clean_title(relation['titleB']) }#, 'Direction': relation['direction'] }
-				#user_sub_dict['typee'] = get_key(relation, 'types')
-				user_sub_dict['typee'] = get_catLabel(mea[0])
-				user_title_viz[u_id] = user_title_viz[u_id] + [user_sub_dict]
-			else:
-				for m_num in mea:
-					user_sub_dict = {'measures': m_num, 'Song_A': clean_title(relation['titleA']), 'Song_B': clean_title(relation['titleB']) }#, 'Direction': relation['direction'] }
-					#user_sub_dict['typee'] = get_key(relation, 'types')
-					user_sub_dict['typee'] = get_catLabel(m_num)
-					user_title_viz[u_id] = user_title_viz[u_id] + [user_sub_dict]
-
-
-
-	#pprint.pprint(user_title_viz)
-	return user_title_viz
 
 
 def basic_dict_csv(d,header,filename):
