@@ -17,6 +17,11 @@ def get_key(dictt, keyy):
 		answer = "None"
 	return answer
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 11d4c6bba26590d732858444d2b8d0eb2f25ad66
 def basic_dict_csv(d,header,filename):
 	with open(filename, 'w') as f:
 		f.write(header+ ',counts\n')
@@ -35,6 +40,12 @@ def get_record_id(id, data):
 			return info2
 	return "record_id not found"
 
+<<<<<<< HEAD
+=======
+	pprint.pprint(user_title_viz)
+
+
+>>>>>>> 11d4c6bba26590d732858444d2b8d0eb2f25ad66
 
 def main(id):
 	crim = data_set_importer.get_json()
