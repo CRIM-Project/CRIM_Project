@@ -66,7 +66,7 @@ function genData(data_json, title, attr_y, attr_z){
   for(var x in relSongs){
     var the_song = relSongs[x];
     var dataOut = {};
-    dataOut["group"] = "group: " + the_song;
+    dataOut["group"] = the_song;
     dataOut["data"] = [];
     var dataLabels = [];
     var dataTypes = {};
