@@ -70,3 +70,21 @@ body {
     height: 3em;       /* height is 2x line-height, so two lines will display */
     overflow: hidden;
 }
+
+/* ------------------ COLOR TABLE ------------------ */
+.btn-space {
+    margin-right: 5px;
+}
+
+.btn-justified-40{
+    display: table;
+    width: 40%;
+    table-layout: fixed;
+    border-collapse: separate;
+}
+
+
+.btn-group { margin-left: 20px;}
+input[type="radio" i] {
+  visibility:hidden;
+}

@@ -64,6 +64,30 @@
   </div>
 </div>
 <div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-7" id="color_table">
+    <!--div class="btn-group">
+      <a href="#" class="btn btn-primary btn-space btn-justified-40">Relationship type</a>
+      <a href="#" class="btn btn-primary btn-space btn-justified-40">Music Type</a>
+      <a href="#" class="btn btn-primary btn-space btn-justified-40">XXX</a>
+    </div-->
+
+      <div class="btn-group" data-toggle="buttons">
+    <label  id= "op_1" class="btn btn-primary btn-space btn-justified-40 active">
+      <input type="radio" name="options" id="r_type" value="typee" > Relationship Type
+    </label>
+    <label id= "op_2" class="btn btn-primary btn-space btn-justified-40">
+      <input type="radio" name="options" id="m_type" value="m_type"> Music Type
+    </label>
+    <label class="btn option3 btn-primary btn-space btn-justified-40">
+      <input type="radio" name="options" id="option3"> XXX
+    </label>
+</div>
+
+  </div>
+  <div class="col-md-1"></div>
+</div>
+<div class="row">
   <div class="col-md-1"></div>
   <div class="col-md-10" id="myPlot"></div>
   <div class="col-md-1"></div>
@@ -161,6 +185,10 @@ console.log("jsonfile3, ", jsonfile);
 
 $.makeTable = function (mydata) {
     var type_dict = {"rt-q": "Quotation", "rt-tm": "Transformation (mechanical)", "rt-tnm": "Transformation (non mechanical)","rt-nm": "New Material","rt-om": "Omission"}
+    var m_type_dict = {"mt-cf": "Cantus Firmus", "mt-sog": "Soggetto", "mt-csog": "Counter Soggetto", "mt-cd": "Contrapuntal Duo", "mt-fg": "Fuga",
+    "mt-id": "Imitative Duos", "mt-pe": "Periodic Entries", "mt-nid": "Non Imitative Duos", "mt-hr": "Homorhythm", "mt-cad": "Cadences",
+    "mt-int": "Interval Patterns", "mt-fp": "Form and Process "}
+
     var table = $("<table class='table table-hover table-bordered'>");
     var tblHeader = "<thead><tr> <th scope='col'> # </th>";
     for (var k in mydata[0]) tblHeader += "<th scope='col'>" + k + "</th>";

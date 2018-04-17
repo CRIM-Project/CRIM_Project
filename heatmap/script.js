@@ -53,6 +53,8 @@ function get_relSongs(data_json, title, attr_y){
 }
 
 
+
+
 function genData(data_json, title, attr_y, attr_z){
   //console.log("vv", JSON.stringify(jsonF));
   //console.log("got here");
@@ -78,11 +80,12 @@ function genData(data_json, title, attr_y, attr_z){
 
     for(i = 0; i < fromsongs.length; i++){
       var mea;
+      var get_type;
       var the_session = fromsongs[i][attr_z];
       var _song = fromsongs[i][attr_y];
 
-      //console.log("data labels", the_session,dataLabels );
       var typee = fromsongs[i].typee;
+      //var typee = fromsongs[i].get_type;
       //var mea = createRange(fromsongs[i].measures);
       var meaNum = (fromsongs[i].measures).split(",")
 

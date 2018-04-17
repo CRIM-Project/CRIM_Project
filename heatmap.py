@@ -74,12 +74,15 @@ def get_counts(counts_wanted, data):
 				title_counts[title] = temp+1
 				ema_sub_dict = {'record_id': rel['record_id'], 'measures': relation['scoreA_ema'].split('/')[0] , 'Song_From': relation['titleB'] }#, 'Direction': relation['direction'] }
 				ema_sub_dict['typee'] = get_key(relation, 'types')
+				ema_sub_dict['m_type'] = get_key(assertion, 'types')
 				#pprint.pprint(ema_sub_dict)
 				ema_dictionary[title] = ema_dictionary[title]+ [ema_sub_dict]
 			else: #doesnt exist yet
 				title_counts[title]= 1
 				ema_sub_dict = {'record_id': rel['record_id'], 'measures': relation['scoreA_ema'].split('/')[0] , 'Song_From': relation['titleA'], }#'Direction': relation['direction'] }
 				ema_sub_dict['typee'] = get_key(relation, 'types')
+				ema_sub_dict['m_type'] = get_key(assertion, 'types')
+
 				ema_dictionary[title] = [ema_sub_dict]
 				#print ("ema_1", relation['scoreA_ema'])
 				#print ("ema_2", relation['scoreA_ema'].split('/')[0])

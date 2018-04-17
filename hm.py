@@ -78,13 +78,19 @@ def get_user_dict(data):
 			if len(mea) == 1:
 				user_sub_dict = {'measures': mea[0] , 'Song_A': clean_title(relation['titleA']), 'Song_B': clean_title(relation['titleB']) }#, 'Direction': relation['direction'] }
 				#user_sub_dict['typee'] = get_key(relation, 'types')
-				user_sub_dict['typee'] = get_catLabel(mea[0])
+				# user_sub_dict['typee'] = get_catLabel(mea[0])
+				# user_title_viz[u_id] = [user_sub_dict]
+				user_sub_dict['typee'] = get_key(relation, 'types')
+				user_sub_dict['m_type'] = get_key(assertion, 'types')
 				user_title_viz[u_id] = [user_sub_dict]
 			else:
 				for m_num in mea:
 					user_sub_dict = {'measures': m_num , 'Song_A': clean_title(relation['titleA']), 'Song_B': clean_title(relation['titleB']) }#, 'Direction': relation['direction'] }
 					#user_sub_dict['typee'] = get_key(relation, 'types')
-					user_sub_dict['typee'] = get_catLabel(m_num)
+					# user_sub_dict['typee'] = get_catLabel(m_num)
+					# user_title_viz[u_id] = [user_sub_dict]
+					user_sub_dict['typee'] = get_key(relation, 'types')
+					user_sub_dict['m_type'] = get_key(assertion, 'types')
 					user_title_viz[u_id] = [user_sub_dict]
 
 
@@ -92,13 +98,19 @@ def get_user_dict(data):
 			if len(mea) == 1:
 				user_sub_dict = {'measures': mea[0] , 'Song_A': clean_title(relation['titleA']), 'Song_B': clean_title(relation['titleB']) }#, 'Direction': relation['direction'] }
 				#user_sub_dict['typee'] = get_key(relation, 'types')
-				user_sub_dict['typee'] = get_catLabel(mea[0])
+				# user_sub_dict['typee'] = get_catLabel(mea[0])
+				# user_title_viz[u_id] = user_title_viz[u_id] + [user_sub_dict]
+				user_sub_dict['typee'] = get_key(relation, 'types')
+				user_sub_dict['m_type'] = get_key(assertion, 'types')
 				user_title_viz[u_id] = user_title_viz[u_id] + [user_sub_dict]
 			else:
 				for m_num in mea:
 					user_sub_dict = {'measures': m_num, 'Song_A': clean_title(relation['titleA']), 'Song_B': clean_title(relation['titleB']) }#, 'Direction': relation['direction'] }
 					#user_sub_dict['typee'] = get_key(relation, 'types')
-					user_sub_dict['typee'] = get_catLabel(m_num)
+					# user_sub_dict['typee'] = get_catLabel(m_num)
+					# user_title_viz[u_id] = user_title_viz[u_id] + [user_sub_dict]
+					user_sub_dict['typee'] = get_key(relation, 'types')
+					user_sub_dict['m_type'] = get_key(assertion, 'types')
 					user_title_viz[u_id] = user_title_viz[u_id] + [user_sub_dict]
 
 
