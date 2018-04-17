@@ -36,7 +36,7 @@ def get_record_id(id, data):
 			return info2
 	return "record_id not found"
 
-	pprint.pprint(user_title_viz)
+	pprint.pprint(info2)
 
 
 
