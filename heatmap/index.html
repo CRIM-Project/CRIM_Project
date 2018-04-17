@@ -283,23 +283,23 @@ function search(){
         warning_div.append(y);
         (document.getElementById('myPlot')).appendChild(warning_div);
 
-    } else if (value === "1" && validinput.indexOf(title) == -1) {
+    } /*else if (value === "1" && validinput.indexOf(title) == -1) {
         //console.log("ERROR 1.2");
         var y = document.createTextNode(" " + title + " is not a valid score title.");
         warning_div.append(y);
-        (document.getElementById('myPlot')).appendChild(warning_div);
-    } else if (value == "2" && (isNumeric(title) === false || title.length === 0)) {
+        (document.getElementById('myPlot')).appendChild(warning_div);}*/
+    else if (value == "2" && (isNumeric(title) === false || title.length === 0)) {
 
         var y = document.createTextNode(" You have chosen to search by user id. Try searching a number that represents a user id.");
         warning_div.append(y);
         (document.getElementById('myPlot')).appendChild(warning_div);
 
-    } else if (value == "2" && validinput.indexOf(title) == -1) {
+    } /*else if (value == "2" && validinput.indexOf(title) == -1) {
         console.log("ERROR 2.2");
         var y = document.createTextNode(" " + title + " is not a valid user id. Valid user ids are " + validinput.join(", "));
         warning_div.append(y);
-        (document.getElementById('myPlot')).appendChild(warning_div);
-    } else{
+        (document.getElementById('myPlot')).appendChild(warning_div); }*/
+     else{
 
     var jsonfile;
 

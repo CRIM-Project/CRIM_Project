@@ -61,3 +61,12 @@ body {
   line-height: 1;
 
 }
+.timelines-chart .axises .y-axis text, .timelines-chart .axises .grp-axis text{
+
+}
+.grp-axis{
+  word-break: break-all;
+  line-height: 1.5em;
+    height: 3em;       /* height is 2x line-height, so two lines will display */
+    overflow: hidden;
+}

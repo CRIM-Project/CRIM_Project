@@ -66,7 +66,7 @@ function genData(data_json, title, attr_y, attr_z){
   for(var x in relSongs){
     var the_song = relSongs[x];
     var dataOut = {};
-    dataOut["group"] = "group: " + the_song;
+    dataOut["group"] = the_song;
     dataOut["data"] = [];
     var dataLabels = [];
     var dataTypes = {};
@@ -89,7 +89,7 @@ function genData(data_json, title, attr_y, attr_z){
       for(x = 0; x < meaNum.length; x++) {
 
       var _rmeaNum = meaNum[x].split("-")
-      console.log("meaNum: ", meaNum[x]);
+      //console.log("meaNum: ", meaNum[x]);
       //console.log("_rmeaNum: ", _rmeaNum);
       if(_rmeaNum.length == 1){
         mea = [parseInt(_rmeaNum[0]),parseInt(_rmeaNum[0])]
