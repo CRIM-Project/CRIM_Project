@@ -55,7 +55,8 @@ function get_relSongs(data_json, title, attr_y){
 
 
 
-function genData(data_json, title, attr_y, attr_z){
+function genData(data_json, title, attr_y, attr_z, color_by){
+  // console.log("coloring by ", color_by);
   //console.log("vv", JSON.stringify(jsonF));
   //console.log("got here");
   //console.log("title", title);
@@ -84,7 +85,8 @@ function genData(data_json, title, attr_y, attr_z){
       var the_session = fromsongs[i][attr_z];
       var _song = fromsongs[i][attr_y];
 
-      var typee = fromsongs[i].typee;
+      var typee = fromsongs[i][color_by];
+      //var typee = fromsongs[i].typee;
       //var typee = fromsongs[i].get_type;
       //var mea = createRange(fromsongs[i].measures);
       var meaNum = (fromsongs[i].measures).split(",")

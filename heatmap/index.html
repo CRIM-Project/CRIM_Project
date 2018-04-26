@@ -28,12 +28,12 @@
    </div>
 
 <div class="row">
-	<div class="col-md-1"></div>
-	<div class="col-md-10" >
+	<div class="col-md-2"></div>
+	<div class="col-md-8" >
     <form class="form-inline" id="search_form">
       <span class="input-group-append" id="search_form">
         <div class="form-row">
-          <div class="col-sm-4">
+          <div class="col-md-6">
         <div class="input-group mb-3" id="select-form">
           <div class="input-group-prepend">
             <label class="input-group-text" for="inputGroupSelect01">Search by:</label>
@@ -46,46 +46,66 @@
         </div>
       </div>
 
-        <div class="col-sm-8">
+      <div class="col-md-6" id="color_table">
+
+          <div class="btn-group pul-right" data-toggle="buttons">
+        <label  id= "col-btn-lab" class="btn btn-default btn-space">
+          <input type="radio" name="options" id="col_btn_lab" > Show:
+        </label>
+        <label  id= "typee" class="btn btn-info btn-space real-btn active">
+          <input type="radio" name="options" id="r_type" > Relationship Type
+        </label>
+        <label id= "m_type" class="btn btn-info btn-space real-btn">
+          <input type="radio" name="options" id="m_type" > Music Type
+        </label>
+    </div>
+
+      </div>
+
+        <!--div class="col-sm-8">
           <div class="input-group mb-3" id="search_box">
-	    <!--label for="score_title">Search for score title:</label-->
+	    <label for="score_title">Search for score title:</label>
             <input type="text" class="form-control" id="score_title">
         	     <button class="btn btn-outline-secondary" type="button"  onclick="search()">Search</button>
             </span>
 	        </div>
-        </div>
+        </div-->
             </div>
           <br>
         </form>
   </div>
-  <div class="col-md-1">
-    <button type="button" class="btn btn-info"  id='help' data-placement="bottom" data-toggle="popover" title="Welcome!" data-content="Select a type of search by clicking 'Choose...' and selecting from the options">?</button>
+  <div class="col-md-2">
+    <!--button type="button" class="btn btn-info"  id='help' data-placement="bottom" data-toggle="popover" title="Welcome!" data-content="Select a type of search by clicking 'Choose...' and selecting from the options">?</button-->
   <!--  <button type="button" class="btn btn-info" data-toggle="tooltip" id="help" data-placement="bottom" title="Tooltip on left"> ? </button>-->
   </div>
 </div>
 <div class="row">
-  <div class="col-md-4"></div>
-  <div class="col-md-7" id="color_table">
-    <!--div class="btn-group">
-      <a href="#" class="btn btn-primary btn-space btn-justified-40">Relationship type</a>
-      <a href="#" class="btn btn-primary btn-space btn-justified-40">Music Type</a>
-      <a href="#" class="btn btn-primary btn-space btn-justified-40">XXX</a>
-    </div-->
+  <div class="col-md-2"></div>
+
+  <div class="col-sm-8">
+    <div class="input-group mb-3" id="search_box">
+<!--label for="score_title">Search for score title:</label-->
+      <input type="text" class="form-control" id="score_title">
+         <button class="btn btn-outline-secondary" type="button"  onclick="search()">Search</button>
+      </span>
+    </div>
+
+
+  <!--div class="col-md-7" id="color_table">
 
       <div class="btn-group" data-toggle="buttons">
-    <label  id= "op_1" class="btn btn-primary btn-space btn-justified-40 active">
-      <input type="radio" name="options" id="r_type" value="typee" > Relationship Type
+    <label  id= "typee" class="btn btn-primary btn-space btn-justified-50 active"  onclick="search()">
+      <input type="radio" name="options" id="r_type" > Relationship Type
     </label>
-    <label id= "op_2" class="btn btn-primary btn-space btn-justified-40">
-      <input type="radio" name="options" id="m_type" value="m_type"> Music Type
+    <label id= "m_type" class="btn btn-primary btn-space btn-justified-50"  onclick="search()">
+      <input type="radio" name="options" id="m_type" > Music Type
     </label>
-    <label class="btn option3 btn-primary btn-space btn-justified-40">
-      <input type="radio" name="options" id="option3"> XXX
-    </label>
-</div>
+</div-->
 
   </div>
-  <div class="col-md-1"></div>
+  <div class="col-md-2">
+    <button type="button" class="btn btn-info"  id='help' data-placement="bottom" data-toggle="popover" title="Welcome!" data-content="Select a type of search by clicking 'Choose...' and selecting from the options">?</button>
+  </div>
 </div>
 <div class="row">
   <div class="col-md-1"></div>
@@ -117,6 +137,7 @@
   var attr_y = "Song_From";
   var attr_z = "record_id";
 
+
  function test(){
     /////////////////////////////////////////////////////
    /// here is where we will edit the help tooltip ! ///
@@ -124,7 +145,7 @@
    var e = document.getElementById("selector");
    var value = e.options[e.selectedIndex].value;
    var text = e.options[e.selectedIndex].text;
-   console.log(value,text,"has been selected");
+   // console.log(value,text,"has been selected");
    var helpText= 'Some Helpful info about this search will go here!';
    if (value === "1") {  // if value === "1" then the text will be about the Song view
      helpText = "This is the Search for a particular song - try 'Benedicta es'";
@@ -183,11 +204,17 @@ console.log("jsonfile3, ", jsonfile);
 "rt-om": Omission
 */
 
-$.makeTable = function (mydata) {
-    var type_dict = {"rt-q": "Quotation", "rt-tm": "Transformation (mechanical)", "rt-tnm": "Transformation (non mechanical)","rt-nm": "New Material","rt-om": "Omission"}
-    var m_type_dict = {"mt-cf": "Cantus Firmus", "mt-sog": "Soggetto", "mt-csog": "Counter Soggetto", "mt-cd": "Contrapuntal Duo", "mt-fg": "Fuga",
+$.makeTable = function (mydata, col_tab) {
+  var type_dict;
+  if(col_tab === "typee"){
+     type_dict = {"rt-q": "Quotation", "rt-tm": "Transformation (mechanical)", "rt-tnm": "Transformation (non mechanical)","rt-nm": "New Material","rt-om": "Omission"}
+  } else{
+    type_dict = {"mt-cf": "Cantus Firmus", "mt-sog": "Soggetto", "mt-csog": "Counter Soggetto", "mt-cd": "Contrapuntal Duo", "mt-fg": "Fuga",
     "mt-id": "Imitative Duos", "mt-pe": "Periodic Entries", "mt-nid": "Non Imitative Duos", "mt-hr": "Homorhythm", "mt-cad": "Cadences",
     "mt-int": "Interval Patterns", "mt-fp": "Form and Process "}
+  }
+
+// console.log(type_dict);
 
     var table = $("<table class='table table-hover table-bordered'>");
     var tblHeader = "<thead><tr> <th scope='col'> # </th>";
@@ -197,11 +224,14 @@ $.makeTable = function (mydata) {
     $.each(mydata, function (index, value) {
         var TableRow = "<tr> <td scope='row'><b>" + index + "</b></td>";
         $.each(value, function (key, val) {
+          // console.log("the key is, ", key, "and val is, ", val);
             //doing a quick dict replace to un-abreviate of type abreviation
-            if (key === "typee"){
+            if (key === "typee" || key === "m_type"){
+              // console.log("from dict ", type_dict[val]);
               TableRow += "<td>" + type_dict[val] + "</td>";
             }
             else {
+              // console.log("val ", val);
               TableRow += "<td>" + val + "</td>";
             }
         });
@@ -213,14 +243,15 @@ $.makeTable = function (mydata) {
 };
 
 
-function buildResults(results){
+function buildResults(results, col_tab){
   var title = document.getElementById("score_title").value;
   var fromsongs = results;
-  console.log("from songs, ", fromsongs);
-  console.log("results, ", results);
+  // console.log("from songs, ", fromsongs);
+  // console.log("results, ", results);
+  // console.log("coloring by, ", col_tab);
 
   var mydata = eval(results);
-  var table = $.makeTable(mydata);
+  var table = $.makeTable(mydata, col_tab);
   $(table).appendTo("#myTable");
 
 }
@@ -331,13 +362,16 @@ function search(){
 
     var jsonfile;
 
+    var col_tab = document.getElementsByClassName("btn-group")[0].getElementsByClassName("active")[0].getAttribute("id");
+    console.log("xcc ", col_tab);
+
     $.getJSON(input_json).done(function (data) {
       jsonfile = data;
       var title = document.getElementById("score_title").value ;
 
-    buildResults(jsonfile[title]);
+    buildResults(jsonfile[title], col_tab);
     TimelinesChart()
-      .data(genData(jsonfile, title,  attr_y, attr_z))
+      .data(genData(jsonfile, title,  attr_y, attr_z, col_tab))
       .zQualitative(true)
       .timeFormat('%Q')
       .xTickFormat(n => +n)
