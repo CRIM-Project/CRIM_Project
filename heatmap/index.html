@@ -15,7 +15,8 @@
    <!--script src="//unpkg.com/timelines-chart"></script-->
    <!-- custom css -->
    <link href="style.css" rel="stylesheet">
-
+   <!--for table styling -->
+   <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body>
@@ -28,8 +29,8 @@
    </div>
 
 <div class="row">
-	<div class="col-md-2"></div>
-	<div class="col-md-8" >
+	<div class="col-md-1"></div>
+	<div class="col-md-10" >
     <form class="form-inline" id="search_form">
       <span class="input-group-append" id="search_form">
         <div class="form-row">
@@ -61,24 +62,20 @@
     </div>
 
       </div>
-
-        <!--div class="col-sm-8">
-          <div class="input-group mb-3" id="search_box">
-	    <label for="score_title">Search for score title:</label>
-            <input type="text" class="form-control" id="score_title">
-        	     <button class="btn btn-outline-secondary" type="button"  onclick="search()">Search</button>
-            </span>
-	        </div>
-        </div-->
             </div>
           <br>
         </form>
   </div>
-  <div class="col-md-2">
-    <!--button type="button" class="btn btn-info"  id='help' data-placement="bottom" data-toggle="popover" title="Welcome!" data-content="Select a type of search by clicking 'Choose...' and selecting from the options">?</button-->
-  <!--  <button type="button" class="btn btn-info" data-toggle="tooltip" id="help" data-placement="bottom" title="Tooltip on left"> ? </button>-->
+  <div class="col-md-1">
+    <button type="button" class="btn btn-info"  id='help' data-placement="bottom" data-toggle="popover" title="Welcome!"
+    data-content="Select a type of search by clicking 'Choose...' and selecting from the options. If you wish to view a different
+    coloring scheme for the visualization (i.e. relationship type or music type) then select different group for
+    coloring and click search button again."
+    >?</button>
+
   </div>
 </div>
+<br>
 <div class="row">
   <div class="col-md-2"></div>
 
@@ -90,21 +87,8 @@
       </span>
     </div>
 
-
-  <!--div class="col-md-7" id="color_table">
-
-      <div class="btn-group" data-toggle="buttons">
-    <label  id= "typee" class="btn btn-primary btn-space btn-justified-50 active"  onclick="search()">
-      <input type="radio" name="options" id="r_type" > Relationship Type
-    </label>
-    <label id= "m_type" class="btn btn-primary btn-space btn-justified-50"  onclick="search()">
-      <input type="radio" name="options" id="m_type" > Music Type
-    </label>
-</div-->
-
   </div>
   <div class="col-md-2">
-    <button type="button" class="btn btn-info"  id='help' data-placement="bottom" data-toggle="popover" title="Welcome!" data-content="Select a type of search by clicking 'Choose...' and selecting from the options">?</button>
   </div>
 </div>
 <div class="row">
@@ -118,8 +102,12 @@
   <h2>Results</h2>
   <p>Click on the button to toggle between showing and hiding content displayed in the visualization above.</p>
   <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Description" aria-expanded="false" aria-controls="Description">Collapsible Results</button>
+  <br>
   <div class="collapse" id="Description">
-    <div id='myTable'> </div>
+    <br>
+    <div  class="row table-wrapper">
+      <div class="col-md-12" id='myTable'></div>
+    </div>
 
     </div>
 </div>
@@ -205,6 +193,8 @@ console.log("jsonfile3, ", jsonfile);
 */
 
 $.makeTable = function (mydata, col_tab) {
+
+  var table_header_dict = {"m_type" : "Music Type", "typee" : "Relationship Type", "Song_B": "Song_B", "Song_A" : "Song_A", "measures": "Measures"}
   var type_dict;
   if(col_tab === "typee"){
      type_dict = {"rt-q": "Quotation", "rt-tm": "Transformation (mechanical)", "rt-tnm": "Transformation (non mechanical)","rt-nm": "New Material","rt-om": "Omission"}
@@ -216,21 +206,39 @@ $.makeTable = function (mydata, col_tab) {
 
 // console.log(type_dict);
 
-    var table = $("<table class='table table-hover table-bordered'>");
+    var table = $("<table class='table table-hover table-bordered' id='result_table'>");
     var tblHeader = "<thead><tr> <th scope='col'> # </th>";
-    for (var k in mydata[0]) tblHeader += "<th scope='col'>" + k + "</th>";
+    for (var k in mydata[0]){
+      if(k === "typee"  && col_tab === "m_type"){
+        continue;
+      } else if (k === "m_type" && col_tab === "typee"){
+        continue;
+      } else{
+        if(k === "typee" || k === "m_type"){
+            tblHeader += "<th scope='col' colspan='2'>" + table_header_dict[k] + "</th>";
+        } else{
+          tblHeader += "<th scope='col'>" + table_header_dict[k] + "</th>";
+        }
+    }
+    }
     tblHeader += "</tr></thead><tbody>";
     $(tblHeader).appendTo(table);
     $.each(mydata, function (index, value) {
+
         var TableRow = "<tr> <td scope='row'><b>" + index + "</b></td>";
         $.each(value, function (key, val) {
           // console.log("the key is, ", key, "and val is, ", val);
             //doing a quick dict replace to un-abreviate of type abreviation
-            if (key === "typee" || key === "m_type"){
-              // console.log("from dict ", type_dict[val]);
-              TableRow += "<td>" + type_dict[val] + "</td>";
+            if(key === "typee"  && col_tab === "m_type"){
+              return;
+            } else if(key == "m_type" && col_tab === "typee"){
+              return;
             }
-            else {
+            else if ((key === "typee" && col_tab === "typee") || (key === "m_type" && col_tab === "m_type")){
+              // console.log("from dict ", type_dict[val]);
+              TableRow += "<td>" + val + "</td>";
+              TableRow += "<td>" + type_dict[val] + "</td>";
+            } else {
               // console.log("val ", val);
               TableRow += "<td>" + val + "</td>";
             }
@@ -370,6 +378,12 @@ function search(){
       var title = document.getElementById("score_title").value ;
 
     buildResults(jsonfile[title], col_tab);
+    // $('#result_table').DataTable( {
+    //     "pagingType": "full_numbers",
+    //     "ordering": false,
+    //     "info":     false
+    // } );
+
     TimelinesChart()
       .data(genData(jsonfile, title,  attr_y, attr_z, col_tab))
       .zQualitative(true)
@@ -379,6 +393,10 @@ function search(){
         });
     }
 }
+
+
+
+
 
 </script>
 </body>

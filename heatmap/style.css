@@ -100,8 +100,18 @@ input[type="radio" i] {
 
 }
 
-/*
-.real-btn{
-  background-color: #17a2b8 !important;
-  border-color: #f5f5f5 !important;
-}*/
+/*--------------------RESULTS TABLE-----------------------------*/
+#myTable{
+  padding-left: 0px;
+}
+/* .table-wrapper
+{
+    border-top: 1px solid #ced4da;
+    border-bottom: 1px solid #ced4da;
+    width: inherit;
+    height: 100%;
+    overflow: auto;
+
+} */
+
+/* https://datatables.net/examples/basic_init/alt_pagination.html */
