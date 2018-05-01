@@ -138,12 +138,12 @@ We are in the process of starting a website to better collect all of our work on
 
 
 ## To do list
-- [ ] Have a view with users, scores and (music|relationships) types as the color
+- [x] Have a view with users, scores and (music|relationships) types as the color
 - [ ] Have a view relationship types ( y-axis ), scores, music types as color
 - [x] fix measures axis line up
 - [x] view heatmap for one score at a time
 - [ ] look into actual heatmap opacity functionality
-- [ ] look into being able to toggle between different attributes for the axes
+- [x] look into being able to toggle between different attributes for the axes
 - [ ] make scripts to generate the jsons that the above visualizations will require
 - [ ] optimize the table with possibly some linked data functionality
 
