@@ -143,7 +143,7 @@ We are in the process of starting a website to better collect all of our work on
 - [x] fix measures axis line up
 - [x] view heatmap for one score at a time
 - [ ] look into actual heatmap opacity functionality
-- [ ] look into being able to toggle between different attributes for the axes
+- [x] look into being able to toggle between different attributes for the axes
 - [ ] make scripts to generate the jsons that the above visualizations will require
 - [ ] optimize the table with possibly some linked data functionality
 
